@@ -1,10 +1,7 @@
 package service;
 
 import dao.GiaoVuDAO;
-import model.Giaovu;
-import model.Hocki;
-import model.Lophoc;
-import model.Monhoc;
+import model.*;
 
 import java.util.List;
 
@@ -81,5 +78,21 @@ public class GiaoVuService {
 
     public int[] thongTinLop(String maLop){//[0] Nam; [1] Nữ; [2] Tổng hs
         return dao.thongTinLop(maLop);
+    }
+
+    public List<Sinhvien> layDanhSachSinhVien(){
+        return dao.layDanhSachSinhVien();
+    }
+
+    public Sinhvien laySinhVienBangMaSinhVien(String maSinhVien){
+        return dao.laySinhVienBangMaSinhVien(maSinhVien);
+    }
+
+    public boolean themSinhVienVaoLop(Sinhvien sinhvien){
+        return dao.themSinhVienVaoLop(sinhvien);
+    }
+
+    public boolean capNhatSinhVien(Sinhvien sinhvien){
+        return dao.capNhatSinhVien(sinhvien);
     }
 }

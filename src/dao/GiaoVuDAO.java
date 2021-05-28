@@ -13,6 +13,7 @@ public class GiaoVuDAO {
     private MonHocDAO monHocDAO = new MonHocDAO();
     private HocKiDAO hocKiDAO = new HocKiDAO();
     private LopHocDAO lopHocDAO = new LopHocDAO();
+    private SinhVienDAO sinhVienDAO = new SinhVienDAO();
 
     public List<Giaovu> layDanhSachGiaoVu() {
         Session session = HibernateUtil.getSessionFactory().openSession();
@@ -194,5 +195,20 @@ public class GiaoVuDAO {
 
     public int[] thongTinLop(String maLop){
         return lopHocDAO.thongTinLop(maLop);
+    }
+
+    public List<Sinhvien> layDanhSachSinhVien(){
+        return sinhVienDAO.layDanhSachSinhVien();
+    }
+
+    public Sinhvien laySinhVienBangMaSinhVien(String maSinhVien){
+        return sinhVienDAO.laySinhVienBangMaSinhVien(maSinhVien);
+    }
+
+    public boolean themSinhVienVaoLop(Sinhvien sinhvien){
+        return sinhVienDAO.themSinhVienVaoLop(sinhvien);
+    }
+    public boolean capNhatSinhVien(Sinhvien sinhvien){
+        return sinhVienDAO.capNhatSinhVien(sinhvien);
     }
 }

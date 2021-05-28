@@ -184,9 +184,30 @@ public class Main {
 //            System.out.println("no");
 //        }
 
-        int[] a = giaoVuService.thongTinLop("19CNTN");
-        for (int i: a) {
-            System.out.println(i);
+//        int[] a = giaoVuService.thongTinLop("19CNTN");
+//        for (int i: a) {
+//            System.out.println(i);
+//        }
+
+//        List<Sinhvien> dssv = giaoVuService.layDanhSachSinhVien();
+//        for (Sinhvien i : dssv) {
+//            System.out.println(i.toString());
+//        }
+
+//        Sinhvien sv = giaoVuService.laySinhVienBangMaSinhVien("19120001");
+////        System.out.println(sv.toString());
+//        Set<Hocphanmo> hocphanmos = sv.getHocphanmos();
+//        for (Hocphanmo i : hocphanmos) {
+//            System.out.println(i.toString());
+//        }
+        Date date1 = Date.valueOf("2001-08-01");
+        Lophoc lophoc = giaoVuService.layThongTinLopHocBangMaLop("19CTT3");
+        Sinhvien sinhvien = new Sinhvien("19120008","Bùi Văn Minh","Nam",date1,"Kiên Giang","19120008","19120008",lophoc);
+        if(giaoVuService.themSinhVienVaoLop(sinhvien)){
+            System.out.println("ok");
+        }else{
+            System.out.println("no");
         }
+
     }
 }

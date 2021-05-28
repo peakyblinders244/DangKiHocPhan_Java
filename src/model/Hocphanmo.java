@@ -6,6 +6,18 @@ import java.util.Set;
 
 public class Hocphanmo {
     private int id;
+
+    @Override
+    public String toString() {
+        return "Hocphanmo{" +
+                "tenHocPhan='" + tenHocPhan + '\'' +
+                ", tenPhongHoc='" + tenPhongHoc + '\'' +
+                ", thu='" + thu + '\'' +
+                ", ca=" + ca +
+                ", soLuong=" + soLuong +
+                '}';
+    }
+
     private String maGvlt;
     private String tenHocPhan;
     private String tenPhongHoc;

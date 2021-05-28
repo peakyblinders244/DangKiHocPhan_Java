@@ -102,6 +102,20 @@ public class Sinhvien {
         this.lopHoc = lopHoc;
     }
 
+    public Sinhvien() {
+    }
+
+    public Sinhvien(String maSinhVien, String tenSinhVien, String gioiTinh, Date ngaySinh, String diaChi, String taiKhoan, String matKhau, Lophoc lopHoc) {
+        this.maSinhVien = maSinhVien;
+        this.tenSinhVien = tenSinhVien;
+        this.gioiTinh = gioiTinh;
+        this.ngaySinh = ngaySinh;
+        this.diaChi = diaChi;
+        this.taiKhoan = taiKhoan;
+        this.matKhau = matKhau;
+        this.lopHoc = lopHoc;
+    }
+
     @Override
     public String toString() {
         return "Sinhvien{" +
