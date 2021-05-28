@@ -1,0 +1,85 @@
+package service;
+
+import dao.GiaoVuDAO;
+import model.Giaovu;
+import model.Hocki;
+import model.Lophoc;
+import model.Monhoc;
+
+import java.util.List;
+
+public class GiaoVuService {
+    private GiaoVuDAO dao = new GiaoVuDAO();
+
+    public List<Giaovu> layDanhSachGiaoVu(){
+        return dao.layDanhSachGiaoVu();
+    }
+
+    public Giaovu giaoVuDangNhap(String taiKhoan,String matKhau){
+        return dao.giaoVuDangNhap(taiKhoan,matKhau);
+    }
+
+    public boolean capNhatGiaoVu(Giaovu giaovu){
+        return dao.capNhatGiaoVu(giaovu);
+    }
+
+    public boolean themGiaoVu(Giaovu giaovu){
+        return dao.themGiaoVu(giaovu);
+    }
+
+    public Giaovu layThongTinGiaoVuBangId(int id){
+        return dao.layThongTinGiaoVuBangId(id);
+    }
+
+    public Giaovu layThongtinGiaoVuBangTaiKhoan(String taiKhoan){
+        return dao.layThongTinGiaoVuBangTaiKhoan(taiKhoan);
+    }
+
+    public boolean xoaTaiKhoanGiaoVu(String taiKhoan){
+        return dao.xoaTaiKhoanGiaoVu(taiKhoan);
+    }
+
+    public List<Monhoc> layDanhSachMonHoc(){
+        return dao.layDanhSachMonHoc();
+    }
+
+    public boolean themMonHocMoi(Monhoc monhoc){
+        return dao.themMonHocMoi(monhoc);
+    }
+
+    public List<Hocki> layDanhSachHocKi(){
+        return dao.layDanhSachHocKi();
+    }
+
+    public Hocki layThongTinHocKiHienTai(String tenHocKi,int namHoc){
+        return dao.layThongTinHocKiHienTai(tenHocKi,namHoc);
+    }
+
+    public boolean themHocKiMoi(Hocki hocki){
+        return dao.themHocKiMoi(hocki);
+    }
+
+    public boolean xoaHocKi(String tenHocKi,int namHoc){
+        return dao.xoaHocKi(tenHocKi,namHoc);
+    }
+
+    public List<Lophoc> layDanhSachLopHoc(){
+        return dao.layDanhSachLopHoc();
+    }
+
+    public Lophoc layThongTinLopHocBangMaLop(String maLop){
+        return dao.layThongTinLopHocBangMaLop(maLop);
+    }
+
+    public boolean themLopHocMoi(Lophoc lophoc){
+        return dao.themLopHocMoi(lophoc);
+    }
+
+    public boolean xoaLopHoc(String maLop){
+        return dao.xoaLopHoc(maLop);
+    }
+
+    public int[] thongTinLop(String maLop){//[0] Nam; [1] Nữ; [2] Tổng hs
+        return dao.thongTinLop(maLop);
+    }
+}

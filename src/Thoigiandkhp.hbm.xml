@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="model.Thoigiandkhp" table="thoigiandkhp" schema="dangkihocphan">
+        <id name="id">
+            <column name="id" sql-type="int"/>
+        </id>
+        <property name="ngayBatDau">
+            <column name="ngayBatDau" sql-type="date" not-null="true"/>
+        </property>
+        <property name="ngayKetThuc">
+            <column name="ngayKetThuc" sql-type="date" not-null="true"/>
+        </property>
+
+        <many-to-one name="hocki" class="model.Hocki" fetch="join" lazy="false" cascade="save-update,delete">
+            <column name="idKi" not-null="true"/>
+        </many-to-one>
+
+        <set name="hocphanmos" inverse="true" lazy="true" cascade="save-update,delete" fetch="join">
+            <key>
+                <column name="idThoiGianDKHP" not-null="true"/>
+            </key>
+            <one-to-many class="model.Hocphanmo"/>
+        </set>
+    </class>
+</hibernate-mapping>

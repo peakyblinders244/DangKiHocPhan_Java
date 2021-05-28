@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="model.Monhoc" table="monhoc" schema="dangkihocphan">
+        <id name="id">
+            <column name="id" sql-type="int"/>
+        </id>
+        <property name="maMonHoc">
+            <column name="maMonHoc" sql-type="char(10)" length="10" not-null="true"/>
+        </property>
+        <property name="tenMonHoc">
+            <column name="tenMonHoc" sql-type="varchar(50)" length="50" not-null="true"/>
+        </property>
+        <property name="soTinChi">
+            <column name="soTinChi" sql-type="int" not-null="true"/>
+        </property>
+        <set name="giaoviens" inverse="true" lazy="false" cascade="save-update,delete" fetch="join">
+            <key>
+                <column name="idMonHoc" not-null="true"/>
+
+            </key>
+            <one-to-many class="model.Giaovien"/>
+        </set>
+
+        <set name="hocphanmos" inverse="true" lazy="false" cascade="save-update,delete" fetch="join">
+            <key>
+                <column name="idMonHoc" not-null="true"/>
+            </key>
+            <one-to-many class="model.Hocphanmo"/>
+        </set>
+    </class>
+</hibernate-mapping>

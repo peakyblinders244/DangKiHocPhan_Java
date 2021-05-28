@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="model.Lophoc" table="lophoc" schema="dangkihocphan">
+        <id name="id">
+            <column name="id" sql-type="int"/>
+        </id>
+        <property name="maLop">
+            <column name="maLop" sql-type="char(10)" length="10" not-null="true"/>
+        </property>
+        <property name="tenLop">
+            <column name="tenLop" sql-type="varchar(10)" length="10" not-null="true"/>
+        </property>
+        <property name="maGvcn">
+            <column name="maGVCN" sql-type="char(10)" length="10" not-null="true"/>
+        </property>
+        <set name="sinhviens" inverse="true" lazy="false"
+             cascade="save-update, delete" fetch="join">
+            <key>
+                <column name="idLop" not-null="true"/>
+            </key>
+            <one-to-many class="model.Sinhvien"/>
+        </set>
+    </class>
+</hibernate-mapping>
