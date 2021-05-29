@@ -8,6 +8,16 @@ import java.util.Set;
 public class Thoigiandkhp {
     private int id;
     private Date ngayBatDau;
+
+    public Thoigiandkhp() {
+    }
+
+    public Thoigiandkhp(Date ngayBatDau, Date ngayKetThuc, Hocki hocki) {
+        this.ngayBatDau = ngayBatDau;
+        this.ngayKetThuc = ngayKetThuc;
+        this.hocki = hocki;
+    }
+
     private Date ngayKetThuc;
     private Hocki hocki;
     Set<Hocphanmo> hocphanmos = new HashSet<Hocphanmo>(0);

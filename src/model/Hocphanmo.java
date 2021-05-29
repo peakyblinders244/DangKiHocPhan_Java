@@ -21,6 +21,21 @@ public class Hocphanmo {
     private String maGvlt;
     private String tenHocPhan;
     private String tenPhongHoc;
+
+    public Hocphanmo() {
+    }
+
+    public Hocphanmo(String maGvlt, String tenHocPhan, String tenPhongHoc, String thu, Integer ca, Integer soLuong, Thoigiandkhp thoigiandkhp, Monhoc monhoc) {
+        this.maGvlt = maGvlt;
+        this.tenHocPhan = tenHocPhan;
+        this.tenPhongHoc = tenPhongHoc;
+        this.thu = thu;
+        this.ca = ca;
+        this.soLuong = soLuong;
+        this.thoigiandkhp = thoigiandkhp;
+        this.monhoc = monhoc;
+    }
+
     private String thu;
     private Integer ca;
     private Integer soLuong;

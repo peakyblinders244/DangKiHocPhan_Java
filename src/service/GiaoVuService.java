@@ -95,4 +95,37 @@ public class GiaoVuService {
     public boolean capNhatSinhVien(Sinhvien sinhvien){
         return dao.capNhatSinhVien(sinhvien);
     }
+
+    public List<Hocphanmo> layDanhSachHocPhanMo(){
+        return dao.layDanhSachHocPhanMo();
+    }
+
+    public List<Hocphanmo> layDanhSachHocPhanMoTrongHocKi(String maHocKi,int nam){
+        return dao.layDanhSachHocPhanMoTrongHocKi(maHocKi,nam);
+    }
+
+    public boolean themThoiGianDKHP(Thoigiandkhp thoigiandkhp){
+        return dao.themThoiGianDKHP(thoigiandkhp);
+    }
+
+    public boolean xoaThoiGianDKHP(Hocki hocki){
+        return dao.xoaThoiGianDKHP(hocki);
+    }
+
+    public boolean themHocPhanTrongKi(Hocphanmo hocphanmo){
+        return dao.themHocPhanTrongKi(hocphanmo);
+    }
+
+    public boolean xoaHocPhanTrongKi(Hocphanmo hocphanmo){
+        return dao.xoaHocPhanTrongKi(hocphanmo);
+    }
+
+    public Thoigiandkhp layThongtinThoiGianDKHPHienTai(String tenHocKi,int nam){
+        return dao.layThongtinThoiGianDKHPHienTai(tenHocKi,nam);
+    }
+
+    public Monhoc layThongTinMonHocBangMaMonHoc(String maMonHoc){
+        return dao.layThongTinMonHocBangMaMonHoc(maMonHoc);
+    }
 }
+

@@ -14,6 +14,8 @@ public class GiaoVuDAO {
     private HocKiDAO hocKiDAO = new HocKiDAO();
     private LopHocDAO lopHocDAO = new LopHocDAO();
     private SinhVienDAO sinhVienDAO = new SinhVienDAO();
+    private HocPhanMoDAO hocPhanMoDAO = new HocPhanMoDAO();
+    private ThoiGianDKHPDAO thoiGianDKHPDAO = new ThoiGianDKHPDAO();
 
     public List<Giaovu> layDanhSachGiaoVu() {
         Session session = HibernateUtil.getSessionFactory().openSession();
@@ -160,6 +162,10 @@ public class GiaoVuDAO {
         return monHocDAO.themMonHocMoi(monhoc);
     }
 
+    public Monhoc layThongTinMonHocBangMaMonHoc(String maMonHoc){
+        return monHocDAO.layThongTinMonHocBangMaMonHoc(maMonHoc);
+    }
+
     public List<Hocki> layDanhSachHocKi(){
         return hocKiDAO.layDanhSachHocKi();
     }
@@ -210,5 +216,33 @@ public class GiaoVuDAO {
     }
     public boolean capNhatSinhVien(Sinhvien sinhvien){
         return sinhVienDAO.capNhatSinhVien(sinhvien);
+    }
+
+    public List<Hocphanmo> layDanhSachHocPhanMo(){
+        return hocPhanMoDAO.layDanhSachHocPhanMo();
+    }
+
+    public List<Hocphanmo> layDanhSachHocPhanMoTrongHocKi(String maHocKi,int nam){
+        return hocPhanMoDAO.layDanhSachHocPhanMoTrongHocKi(maHocKi,nam);
+    }
+
+    public Thoigiandkhp layThongtinThoiGianDKHPHienTai(String tenHocKi,int nam){
+        return thoiGianDKHPDAO.layThongtinThoiGianDKHPHienTai(tenHocKi,nam);
+    }
+
+    public boolean themThoiGianDKHP(Thoigiandkhp thoigiandkhp){
+        return thoiGianDKHPDAO.themThoiGianDKHP(thoigiandkhp);
+    }
+
+    public boolean xoaThoiGianDKHP(Hocki hocki){
+        return thoiGianDKHPDAO.xoaThoiGianDKHP(hocki);
+    }
+
+    public boolean themHocPhanTrongKi(Hocphanmo hocphanmo){
+        return hocPhanMoDAO.themHocPhanTrongKi(hocphanmo);
+    }
+
+    public boolean xoaHocPhanTrongKi(Hocphanmo hocphanmo){
+        return hocPhanMoDAO.xoaHocPhanTrongKi(hocphanmo);
     }
 }

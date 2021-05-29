@@ -150,7 +150,8 @@ public class Main {
 
 //        Date date1 = Date.valueOf("2022-08-01");
 //        Date date2 = Date.valueOf("2022-01-31");
-//        //Hocki hocki = new Hocki("HK1",2022,date1,date2);
+//        Hocki hocki = new Hocki("HK1",2022,date1,date2);
+
 //        if(giaoVuService.xoaHocKi("HK1",2022)){
 //            System.out.println("ok");
 //        }else{
@@ -200,14 +201,44 @@ public class Main {
 //        for (Hocphanmo i : hocphanmos) {
 //            System.out.println(i.toString());
 //        }
-        Date date1 = Date.valueOf("2001-08-01");
-        Lophoc lophoc = giaoVuService.layThongTinLopHocBangMaLop("19CTT3");
-        Sinhvien sinhvien = new Sinhvien("19120008","Bùi Văn Minh","Nam",date1,"Kiên Giang","19120008","19120008",lophoc);
-        if(giaoVuService.themSinhVienVaoLop(sinhvien)){
+
+//        Date date1 = Date.valueOf("2001-08-01");
+//        Lophoc lophoc = giaoVuService.layThongTinLopHocBangMaLop("19CTT3");
+//        Sinhvien sinhvien = new Sinhvien("19120008","Bùi Văn Minh","Nam",date1,"Kiên Giang","19120008","19120008",lophoc);
+//        if(giaoVuService.themSinhVienVaoLop(sinhvien)){
+//            System.out.println("ok");
+//        }else{
+//            System.out.println("no");
+//        }
+
+//        List<Hocphanmo> list = giaoVuService.layDanhSachHocPhanMoTrongHocKi("HK1",2019);
+//        for (Hocphanmo i : list) {
+//            System.out.println(i.toString());
+//        }
+
+//        4Date date1 = Date.valueOf("2022-08-01");
+//        Date date2 = Date.valueOf("2022-01-31");
+//        Hocki hocki = new Hocki("HK1",2022,date1,date2);
+//        giaoVuService.themHocKiMoi(hocki);
+//
+////        Date date3 = Date.valueOf("2022-07-01");
+////        Date date4 = Date.valueOf("2022-07-31");
+////        Thoigiandkhp thoigiandkhp = new Thoigiandkhp(date3,date4,hocki);
+//        if(giaoVuService.xoaThoiGianDKHP(hocki)){
+//            System.out.println("ok");
+//        }else{
+//            System.out.println("no");
+//        }
+        Thoigiandkhp thoigiandkhp = giaoVuService.layThongtinThoiGianDKHPHienTai("HK3",2021);
+        Monhoc monhoc = giaoVuService.layThongTinMonHocBangMaMonHoc("CSC0001");
+        Monhoc monhoc1 = new Monhoc("CSC0007","Hệ Thống Máy Tính",4);
+        System.out.println(monhoc.getId());
+        Hocphanmo hocphanmo = new Hocphanmo("10120001","Hệ Thống Máy Tính 2","E301","Thứ 7",4,150,thoigiandkhp,monhoc1);
+        System.out.println(hocphanmo.getId());
+        if(giaoVuService.themHocPhanTrongKi(hocphanmo)){
             System.out.println("ok");
         }else{
             System.out.println("no");
         }
-
     }
 }
