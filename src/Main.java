@@ -229,15 +229,94 @@ public class Main {
 //        }else{
 //            System.out.println("no");
 //        }
-        Thoigiandkhp thoigiandkhp = giaoVuService.layThongtinThoiGianDKHPHienTai("HK3",2021);
-        Monhoc monhoc = giaoVuService.layThongTinMonHocBangMaMonHoc("CSC0001");
-        Monhoc monhoc1 = new Monhoc("CSC0007","Hệ Thống Máy Tính",4);
-        System.out.println(monhoc.getId());
-        Hocphanmo hocphanmo = new Hocphanmo("10120001","Hệ Thống Máy Tính 2","E301","Thứ 7",4,150,thoigiandkhp,monhoc1);
-        System.out.println(hocphanmo.getId());
-        if(giaoVuService.themHocPhanTrongKi(hocphanmo)){
+
+//        Thoigiandkhp thoigiandkhp = giaoVuService.layThongtinThoiGianDKHPHienTai("HK2", 2021);
+//        Monhoc monhoc = giaoVuService.layThongTinMonHocBangMaMonHoc("CSC0001");
+//        Monhoc monhoc1 = new Monhoc("CSC0007", "Hệ Thống Máy Tính", 4);
+//        System.out.println(monhoc.getId());
+//        Monhoc monhoc = giaoVuService.layThongTinMonHocBangMaMonHoc("CSC0007");
+//        Hocphanmo hocphanmo = new Hocphanmo("10120002", "Hệ Thống Máy Tính 3", "E201", "Thứ 6", 3, 150, thoigiandkhp, monhoc);
+//        System.out.println(hocphanmo.getId());
+//        if(giaoVuService.themHocPhanTrongKi(hocphanmo)){
+//            System.out.println("ok");
+//        }else{
+//            System.out.println("no");
+//        }
+
+//        List<Hocphanmo> hocphanmos = giaoVuService.layDanhSachHocPhanMo();
+//        for (Hocphanmo i: hocphanmos) {
+//            System.out.println(i.toString());
+//        }
+
+//        List<Monhoc> list = giaoVuService.layDanhSachMonHoc();
+//        Monhoc monhoc = list.get(1);
+//        System.out.println(monhoc.toString());
+//        hocphanmo.getMonhoc().setId(monhoc.getId());
+//        Set<Hocphanmo> hocphanmos = monhoc.getHocphanmos();
+//        hocphanmos.add(hocphanmo);
+//
+//        if (giaoVuService.capNhatMonHoc(monhoc)) {
+//            System.out.println("ok");
+//        } else {
+//            System.out.println("no");
+//        }
+
+//        if (giaoVuService.themMonHocMoi(monhoc1)) {
+//            System.out.println("ok");
+//        } else {
+//            System.out.println("no");
+//        }
+
+
+//        Hocphanmo hocphanmo2 = null;
+//        for (Hocphanmo i: hocphanmos) {
+//            System.out.println(i.getId() + i.toString());
+//            if(i.getId() == 17){
+//                hocphanmo2 = i;
+//                System.out.println(i.toString());
+//                if(giaoVuService.xoaHocPhanTrongKi(i)){
+//                    System.out.println("ok");
+//                }else{
+//                    System.out.println("no");
+//                }
+//            }
+//        }
+
+        Thoigiandkhp thoigiandkhp = giaoVuService.layThongtinThoiGianDKHPHienTai("HK2", 2021);
+
+        System.out.println(thoigiandkhp.getId() +" " + thoigiandkhp.toString());
+        Monhoc monhoc = giaoVuService.layThongTinMonHocBangMaMonHoc("CSC0007");
+        //monhoc.setId(25);
+        System.out.println(monhoc.getId() +" "+ monhoc.toString());
+        Hocphanmo hocphanmo = new Hocphanmo("10120002", "Hệ Thống Máy Tính 1",
+                "E201", "Thứ 6", 3, 150, thoigiandkhp, monhoc);
+
+        Set<Hocphanmo> hocphanmos = monhoc.getHocphanmos();
+
+        for (Hocphanmo i : hocphanmos) {
+            System.out.println(i.toString());
+            System.out.println(i.getMonhoc().toString());
+            System.out.println(i.getThoigiandkhp().toString());
+        }
+//        Hocphanmo hocphanmo = new Hocphanmo();
+//        hocphanmo.setMonhoc(monhoc);
+//        hocphanmo.setCa(3);
+//        hocphanmo.setMaGvlt("10120002");
+//        hocphanmo.setThoigiandkhp(thoigiandkhp);
+//        hocphanmo.setSoLuong(150);
+//        hocphanmo.setTenHocPhan("Hệ Thống Máy Tính 1");
+//        hocphanmo.setThu("Thứ 6");
+
+//        if (giaoVuService.themHocPhanTrongKi(hocphanmo)) {
+//            System.out.println("ok");
+//        } else {
+//            System.out.println("no");
+//        }
+
+
+        if (giaoVuService.xoaHocPhanTrongKi(hocphanmo)) {
             System.out.println("ok");
-        }else{
+        } else {
             System.out.println("no");
         }
     }

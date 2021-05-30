@@ -245,4 +245,8 @@ public class GiaoVuDAO {
     public boolean xoaHocPhanTrongKi(Hocphanmo hocphanmo){
         return hocPhanMoDAO.xoaHocPhanTrongKi(hocphanmo);
     }
+
+    public boolean capNhatMonHoc(Monhoc monhoc){
+        return monHocDAO.capNhatMonHoc(monhoc);
+    }
 }

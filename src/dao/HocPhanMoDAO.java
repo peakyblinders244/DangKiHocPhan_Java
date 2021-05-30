@@ -70,19 +70,26 @@ public class HocPhanMoDAO {
     public boolean themHocPhanTrongKi(Hocphanmo hocphanmo){
         boolean ketQua = true;
         Session session = HibernateUtil.getSessionFactory().openSession();
-        Monhoc monhoc = hocphanmo.getMonhoc();
-
-        if(monHocDAO.layThongTinMonHocBangMaMonHoc(monhoc.getMaMonHoc())==null){
+        /*Monhoc monhoc = hocphanmo.getMonhoc();
+        Thoigiandkhp thoigiandkhp = hocphanmo.getThoigiandkhp();*/
+//
+        /*if(monHocDAO.layThongTinMonHocBangMaMonHoc(monhoc.getMaMonHoc())==null){
             monHocDAO.themMonHocMoi(monhoc);
-        }
-        Monhoc tmp = monHocDAO.layThongTinMonHocBangMaMonHoc(monhoc.getMaMonHoc());
+        }*/
+        /*Monhoc tmp = monHocDAO.layThongTinMonHocBangMaMonHoc(monhoc.getMaMonHoc());
         hocphanmo.getMonhoc().setId(tmp.getId());
-
+        hocphanmo.getThoigiandkhp().setId(thoigiandkhp.getId());
+        monhoc.getHocphanmos().add(hocphanmo);
+        thoigiandkhp.getHocphanmos().add(hocphanmo);*/
         Transaction transaction = null;
         try {
 
             transaction = session.beginTransaction();
-            session.save(hocphanmo);
+//            monHocDAO.capNhatMonHoc(monhoc);
+//            thoiGianDKHPDAO.capNhatThoiGianDKHP(thoigiandkhp);
+            /*session.saveOrUpdate(monhoc);
+            session.saveOrUpdate(thoigiandkhp);*/
+            session.merge(hocphanmo);
             transaction.commit();
         }catch (HibernateException e){
             assert transaction != null;
@@ -99,10 +106,23 @@ public class HocPhanMoDAO {
         boolean ketQua = true;
         Session session = HibernateUtil.getSessionFactory().openSession();
 
+//        Monhoc monhoc = hocphanmo.getMonhoc();
+//        Thoigiandkhp thoigiandkhp = hocphanmo.getThoigiandkhp();
+//
+//        if(monhoc.getHocphanmos().remove(hocphanmo) == false){
+//            ketQua = false;
+//            System.out.println("hi1");
+//        }
+//        if(thoigiandkhp.getHocphanmos().remove(hocphanmo) == false){
+//            ketQua = false;
+//            System.out.println("hi2");
+//        }
+
         Transaction transaction = null;
         try {
-
             transaction = session.beginTransaction();
+//            monHocDAO.capNhatMonHoc(monhoc);
+//            thoiGianDKHPDAO.capNhatThoiGianDKHP(thoigiandkhp);
             session.delete(hocphanmo);
             transaction.commit();
         }catch (HibernateException e){

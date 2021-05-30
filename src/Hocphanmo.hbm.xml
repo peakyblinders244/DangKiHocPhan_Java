@@ -27,11 +27,11 @@
             <column name="soLuong" sql-type="int" not-null="true"/>
         </property>
 
-        <many-to-one name="thoigiandkhp" class="model.Thoigiandkhp" fetch="join" cascade="save-update,delete" lazy="false">
+        <many-to-one name="thoigiandkhp" class="model.Thoigiandkhp" fetch="join" lazy="false" cascade="save-update,delete">
             <column name="idThoiGianDKHP" not-null="true"/>
         </many-to-one>
 
-        <many-to-one name="monhoc" class="model.Monhoc" fetch="join" cascade="save-update,delete" lazy="false">
+        <many-to-one name="monhoc" class="model.Monhoc" fetch="join" lazy="false" cascade="save-update,delete">
             <column name="idMonHoc" not-null="true"/>
         </many-to-one>
 

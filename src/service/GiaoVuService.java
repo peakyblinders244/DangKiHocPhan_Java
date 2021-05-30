@@ -127,5 +127,9 @@ public class GiaoVuService {
     public Monhoc layThongTinMonHocBangMaMonHoc(String maMonHoc){
         return dao.layThongTinMonHocBangMaMonHoc(maMonHoc);
     }
+
+    public boolean capNhatMonHoc(Monhoc monhoc){
+        return dao.capNhatMonHoc(monhoc);
+    }
 }
 
