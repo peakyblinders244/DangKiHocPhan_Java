@@ -131,5 +131,9 @@ public class GiaoVuService {
     public boolean capNhatMonHoc(Monhoc monhoc){
         return dao.capNhatMonHoc(monhoc);
     }
+
+    public Hocphanmo timKiemHocPhanMoBangId(int id){
+        return dao.timKiemHocPhanMoBangId(id);
+    }
 }
 

@@ -1,9 +1,6 @@
 package dao;
 
-import model.Giaovu;
-import model.Hocki;
-import model.Lophoc;
-import model.Sinhvien;
+import model.*;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -11,6 +8,7 @@ import org.hibernate.query.Query;
 import util.HibernateUtil;
 
 import java.util.List;
+import java.util.Set;
 
 public class SinhVienDAO {
     public List<Sinhvien> layDanhSachSinhVien() {
@@ -113,6 +111,76 @@ public class SinhVienDAO {
 
             transaction = session.beginTransaction();
             session.save(sinhvien);
+            transaction.commit();
+        }catch (HibernateException e){
+            assert transaction != null;
+            transaction.rollback();
+            System.err.println(e);
+            ketQua = false;
+        }finally {
+            session.close();
+        }
+        return ketQua;
+    }
+
+    public boolean sinhVienThemHocPhan(Sinhvien sinhvien, Hocphanmo hocphanmo){
+        boolean ketQua = true;
+
+        if(laySinhVienBangMaSinhVien(sinhvien.getMaSinhVien()) == null){
+            return false;
+        }
+        Set<Hocphanmo> hocphanmos = sinhvien.getHocphanmos();
+        if(hocphanmos.size() == 8){
+            return false;
+        }
+        for (Hocphanmo i : hocphanmos) {
+            if(i == hocphanmo){
+                return false;
+            }
+            if(i.getCa().equals(hocphanmo.getCa()) && i.getThu().equals(hocphanmo.getThu())){
+                return false;
+            }
+        }
+        if(!sinhvien.getHocphanmos().add(hocphanmo)){
+            return false;
+        }
+
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction transaction = null;
+        try {
+
+            transaction = session.beginTransaction();
+            session.saveOrUpdate(sinhvien);
+            transaction.commit();
+        }catch (HibernateException e){
+            assert transaction != null;
+            transaction.rollback();
+            System.err.println(e);
+            ketQua = false;
+        }finally {
+            session.close();
+        }
+        return ketQua;
+    }
+
+    public boolean sinhVienXoaHocPhan(Sinhvien sinhvien, Hocphanmo hocphanmo){
+        boolean ketQua = true;
+
+        if(laySinhVienBangMaSinhVien(sinhvien.getMaSinhVien()) == null){
+
+            return false;
+        }
+
+        if(!sinhvien.getHocphanmos().remove(hocphanmo)){
+            return false;
+        }
+
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction transaction = null;
+        try {
+
+            transaction = session.beginTransaction();
+            session.saveOrUpdate(sinhvien);
             transaction.commit();
         }catch (HibernateException e){
             assert transaction != null;

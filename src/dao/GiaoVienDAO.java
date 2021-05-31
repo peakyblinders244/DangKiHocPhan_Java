@@ -1,9 +1,6 @@
 package dao;
 
-import model.Giaovien;
-import model.Lophoc;
-import model.Monhoc;
-import model.Sinhvien;
+import model.*;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import util.HibernateUtil;
@@ -28,5 +25,7 @@ public class GiaoVienDAO {
         }
         return giaovien;
     }
+
+
 
 }

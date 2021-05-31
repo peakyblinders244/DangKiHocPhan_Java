@@ -29,11 +29,11 @@
         <property name="matKhau">
             <column name="matKhau" sql-type="char(10)" length="10" not-null="true"/>
         </property>
-        <many-to-one name="lopHoc" class="model.Lophoc" fetch="join" lazy="false" cascade="save-update,delete">
+        <many-to-one name="lopHoc" class="model.Lophoc" fetch="join" lazy="false" cascade="save-update">
             <column name="idLop" not-null="true"/>
         </many-to-one>
 
-        <set name="hocphanmos" inverse="false" table="sinhvien_hocphan" fetch="join" lazy="false" cascade="save-update,delete">
+        <set name="hocphanmos" inverse="false" table="sinhvien_hocphan" fetch="join" lazy="false" cascade="save-update">
             <key>
                 <column name="idSinhVien" not-null="true"/>
             </key>

@@ -249,4 +249,8 @@ public class GiaoVuDAO {
     public boolean capNhatMonHoc(Monhoc monhoc){
         return monHocDAO.capNhatMonHoc(monhoc);
     }
+
+    public Hocphanmo timKiemHocPhanMoBangId(int id){
+        return hocPhanMoDAO.timKiemHocPhanMoBangId(id);
+    }
 }
