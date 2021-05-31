@@ -21,7 +21,11 @@ public class DangNhap extends javax.swing.JFrame {
     /**
      * Creates new form DangNhap
      */
-    private String nameLogin;
+    public static Giaovu giaovu = null;
+    public static Sinhvien sinhvien = null;
+    public static int kiemTraNguoiDung = 0; //0 la giao vu, 1 la sinh vien
+    public static GiaoVuService giaoVuService = new GiaoVuService();
+    public static SinhVienService sinhVienService = new SinhVienService();
 
     public DangNhap() {
         initComponents();
@@ -105,18 +109,21 @@ public class DangNhap extends javax.swing.JFrame {
             this.resetForm();
         }
         else {
-            Giaovu giaovu = giaoVuService.giaoVuDangNhap(stTaiKhoan,stMatKhau);
+            giaovu = giaoVuService.giaoVuDangNhap(stTaiKhoan,stMatKhau);
             if(giaovu != null){
                 //code
-                nameLogin = stTaiKhoan;
-                System.out.println("hi1");
+                kiemTraNguoiDung = 0;
+                new MainGiaoVu().setVisible(true);
+                dispose();
+
             }
             else {
-                Sinhvien sinhvien = sinhVienService.sinhVienDangNhap(stTaiKhoan,stMatKhau);
+                sinhvien = sinhVienService.sinhVienDangNhap(stTaiKhoan,stMatKhau);
                 if(sinhvien != null){
                     //code
-                    nameLogin = stTaiKhoan;
-                    System.out.println("hi2");
+                    kiemTraNguoiDung = 1;
+                    new MainSinhVien().setVisible(true);
+                    dispose();
                 }
                 else{
                     JOptionPane.showMessageDialog(null, "Tài khoản và mật khẩu không đúng !");
@@ -177,8 +184,7 @@ public class DangNhap extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPasswordField matKhau;
     private javax.swing.JTextField taiKhoan;
-    private GiaoVuService giaoVuService = new GiaoVuService();
-    private SinhVienService sinhVienService = new SinhVienService();
+
 
     // End of variables declaration
 }

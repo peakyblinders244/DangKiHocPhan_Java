@@ -110,4 +110,25 @@ public class MonHocDAO {
         }
         return ketQua;
     }
+
+    public boolean xoaMonHoc(Monhoc monhoc){
+        boolean ketQua = true;
+        Session session = HibernateUtil.getSessionFactory().openSession();
+
+        Transaction transaction = null;
+
+        try {
+            transaction = session.beginTransaction();
+            session.delete(monhoc);
+            transaction.commit();
+        }catch (HibernateException e){
+            assert transaction != null;
+            transaction.rollback();
+            System.err.println(e);
+            ketQua = false;
+        }finally {
+            session.close();
+        }
+        return ketQua;
+    }
 }

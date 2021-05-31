@@ -135,5 +135,9 @@ public class GiaoVuService {
     public Hocphanmo timKiemHocPhanMoBangId(int id){
         return dao.timKiemHocPhanMoBangId(id);
     }
+
+    public boolean xoaMonHoc(Monhoc monhoc){
+        return dao.xoaMonHoc(monhoc);
+    }
 }
 

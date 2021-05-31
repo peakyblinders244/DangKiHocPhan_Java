@@ -166,6 +166,10 @@ public class GiaoVuDAO {
         return monHocDAO.layThongTinMonHocBangMaMonHoc(maMonHoc);
     }
 
+    public boolean xoaMonHoc(Monhoc monhoc){
+        return monHocDAO.xoaMonHoc(monhoc);
+    }
+
     public List<Hocki> layDanhSachHocKi(){
         return hocKiDAO.layDanhSachHocKi();
     }
