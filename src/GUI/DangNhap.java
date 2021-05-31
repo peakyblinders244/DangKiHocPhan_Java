@@ -21,6 +21,8 @@ public class DangNhap extends javax.swing.JFrame {
     /**
      * Creates new form DangNhap
      */
+    private String nameLogin;
+
     public DangNhap() {
         initComponents();
     }
@@ -106,12 +108,14 @@ public class DangNhap extends javax.swing.JFrame {
             Giaovu giaovu = giaoVuService.giaoVuDangNhap(stTaiKhoan,stMatKhau);
             if(giaovu != null){
                 //code
+                nameLogin = stTaiKhoan;
                 System.out.println("hi1");
             }
             else {
                 Sinhvien sinhvien = sinhVienService.sinhVienDangNhap(stTaiKhoan,stMatKhau);
                 if(sinhvien != null){
                     //code
+                    nameLogin = stTaiKhoan;
                     System.out.println("hi2");
                 }
                 else{
@@ -175,5 +179,6 @@ public class DangNhap extends javax.swing.JFrame {
     private javax.swing.JTextField taiKhoan;
     private GiaoVuService giaoVuService = new GiaoVuService();
     private SinhVienService sinhVienService = new SinhVienService();
+
     // End of variables declaration
 }
