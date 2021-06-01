@@ -24,7 +24,7 @@ import static GUI.DangNhap.kiemTraNguoiDung;
  */
 public class FormQuanLyHocKi extends javax.swing.JPanel {
     private Hocki hockiChon = null;
-    public Hocki hocKiSet = null;
+    public static Hocki hocKiSet = null;
     /**
      * Creates new form FormQuanLyHocKi
      */
@@ -392,7 +392,7 @@ public class FormQuanLyHocKi extends javax.swing.JPanel {
                 return;
             }
             Date dateBatDau = Date.valueOf(ngayBatDau);
-            Date dateKetThuc = Date.valueOf(ngayBatDau);
+            Date dateKetThuc = Date.valueOf(ngayKetThuc);
             Hocki hockiSua = giaoVuService.layThongTinHocKiHienTai(tenHocKi,namHoc);
             hockiSua.setNgayBatDau(dateBatDau);
             hockiSua.setNgayKetThuc(dateKetThuc);
@@ -450,7 +450,6 @@ public class FormQuanLyHocKi extends javax.swing.JPanel {
         }
         else{
             hocKiSet = hockiChon;
-
             JOptionPane.showMessageDialog(this, "Set Học Kì Thành Công ", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
         }
     }

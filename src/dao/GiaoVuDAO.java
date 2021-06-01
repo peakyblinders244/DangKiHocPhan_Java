@@ -16,6 +16,7 @@ public class GiaoVuDAO {
     private SinhVienDAO sinhVienDAO = new SinhVienDAO();
     private HocPhanMoDAO hocPhanMoDAO = new HocPhanMoDAO();
     private ThoiGianDKHPDAO thoiGianDKHPDAO = new ThoiGianDKHPDAO();
+    private GiaoVienDAO giaoVienDAO = new GiaoVienDAO();
 
     public List<Giaovu> layDanhSachGiaoVu() {
         Session session = HibernateUtil.getSessionFactory().openSession();
@@ -222,6 +223,11 @@ public class GiaoVuDAO {
     public boolean themSinhVienVaoLop(Sinhvien sinhvien){
         return sinhVienDAO.themSinhVienVaoLop(sinhvien);
     }
+
+    public boolean xoaSinhVien(Sinhvien sinhvien){
+        return sinhVienDAO.xoaSinhVien(sinhvien);
+    }
+
     public boolean capNhatSinhVien(Sinhvien sinhvien){
         return sinhVienDAO.capNhatSinhVien(sinhvien);
     }
@@ -240,6 +246,9 @@ public class GiaoVuDAO {
 
     public boolean themThoiGianDKHP(Thoigiandkhp thoigiandkhp){
         return thoiGianDKHPDAO.themThoiGianDKHP(thoigiandkhp);
+    }
+    public boolean capNhatThoiGianDKHP(Thoigiandkhp thoigiandkhp){
+        return thoiGianDKHPDAO.capNhatThoiGianDKHP(thoigiandkhp);
     }
 
     public boolean xoaThoiGianDKHP(Hocki hocki){
@@ -260,5 +269,9 @@ public class GiaoVuDAO {
 
     public Hocphanmo timKiemHocPhanMoBangId(int id){
         return hocPhanMoDAO.timKiemHocPhanMoBangId(id);
+    }
+
+    public Giaovien layGiaoVienBangMaGiaoVien(String maGiaoVien){
+        return giaoVienDAO.layGiaoVienBangMaGiaoVien(maGiaoVien);
     }
 }

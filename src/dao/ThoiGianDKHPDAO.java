@@ -62,10 +62,6 @@ public class ThoiGianDKHPDAO {
         if(layThongtinThoiGianDKHPHienTai(thoigiandkhp.getHocki().getTenHocKi(),thoigiandkhp.getHocki().getNamHoc()) != null){
             return false;
         }
-        hocKiDAO.themHocKiMoi(thoigiandkhp.getHocki());
-        Hocki hocki = hocKiDAO.layThongTinHocKiHienTai(thoigiandkhp.getHocki().getTenHocKi(),thoigiandkhp.getHocki().getNamHoc());
-        thoigiandkhp.getHocki().setId(hocki.getId());
-        System.out.println(hocki.getId());
 
 
         Transaction transaction = null;

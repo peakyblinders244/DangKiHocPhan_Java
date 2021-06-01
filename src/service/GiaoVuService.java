@@ -92,6 +92,10 @@ public class GiaoVuService {
         return dao.themSinhVienVaoLop(sinhvien);
     }
 
+    public boolean xoaSinhVien(Sinhvien sinhvien){
+        return dao.xoaSinhVien(sinhvien);
+    }
+
     public boolean capNhatSinhVien(Sinhvien sinhvien){
         return dao.capNhatSinhVien(sinhvien);
     }
@@ -106,6 +110,9 @@ public class GiaoVuService {
 
     public boolean themThoiGianDKHP(Thoigiandkhp thoigiandkhp){
         return dao.themThoiGianDKHP(thoigiandkhp);
+    }
+    public boolean capNhatThoiGianDKHP(Thoigiandkhp thoigiandkhp){
+        return dao.capNhatThoiGianDKHP(thoigiandkhp);
     }
 
     public boolean xoaThoiGianDKHP(Hocki hocki){
@@ -142,6 +149,10 @@ public class GiaoVuService {
 
     public boolean capNhatHocKi(Hocki hocki){
         return dao.capNhatHocKi(hocki);
+    }
+
+    public Giaovien layGiaoVienBangMaGiaoVien(String maGiaoVien){
+        return dao.layGiaoVienBangMaGiaoVien(maGiaoVien);
     }
 }
 

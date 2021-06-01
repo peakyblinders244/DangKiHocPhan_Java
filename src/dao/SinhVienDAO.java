@@ -62,6 +62,28 @@ public class SinhVienDAO {
         return sinhvien;
     }
 
+    public boolean xoaSinhVien(Sinhvien sinhvien){
+        boolean ketQua = true;
+
+        if(timKiemSinhVienBangIdSinhVien(sinhvien.getId()) == null){
+            return false;
+        }
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction transaction = null;
+        try {
+            transaction = session.beginTransaction();
+            session.delete(sinhvien);
+            transaction.commit();
+        }catch (HibernateException e){
+            assert transaction != null;
+            transaction.rollback();
+            System.err.println(e);
+            ketQua = false;
+        }finally {
+            session.close();
+        }
+        return ketQua;
+    }
     public boolean capNhatSinhVien(Sinhvien sinhvien){
         boolean ketQua = true;
         Session session = HibernateUtil.getSessionFactory().openSession();

@@ -5,12 +5,18 @@
  */
 package GUI;
 
+import model.Hocki;
+import model.Thoigiandkhp;
+
+import javax.swing.*;
+
 /**
  *
  * @author lhqua
  */
 public class MainGiaoVu extends javax.swing.JFrame {
-
+    public Hocki hockiHienTai = null;
+    public Thoigiandkhp thoigiandkhpHienTai = null;
     /**
      * Creates new form MainGiaoVu
      */
@@ -220,6 +226,7 @@ public class MainGiaoVu extends javax.swing.JFrame {
         content.removeAll();
         content.add("Quản Lý Học Kì", quanLyHocKi);
         //quanLyGiaoVu.ResetForm();
+
     }
 
     private void thoatActionPerformed(java.awt.event.ActionEvent evt) {
@@ -252,7 +259,11 @@ public class MainGiaoVu extends javax.swing.JFrame {
     }
 
     private void quanLyLopHocActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
+        FormQuanLyLopHoc quanLyLopHoc = new FormQuanLyLopHoc();
+        quanLyLopHoc.show();
+        content.removeAll();
+        content.add("Quản Lý Lớp Học", quanLyLopHoc);
+        //quanLyLopHoc.ResetForm();
     }
 
     private void quanLyMonHocActionPerformed(java.awt.event.ActionEvent evt) {
@@ -267,11 +278,31 @@ public class MainGiaoVu extends javax.swing.JFrame {
     }
 
     private void quanLyDKHPActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
+        hockiHienTai = FormQuanLyHocKi.hocKiSet;
+        if(hockiHienTai != null) {
+            FormQuanLyDangKiHocPhan quanLyDangKiHocPhan = new FormQuanLyDangKiHocPhan(hockiHienTai);
+            quanLyDangKiHocPhan.show();
+            content.removeAll();
+            content.add("Quản Lý Đăng Kí Học Phần", quanLyDangKiHocPhan);
+            //quanLyGiaoVu.ResetForm();
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "Chưa Set Học Kì Hiện Tại");
+        }
     }
 
     private void quanLyHocPhanActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
+        thoigiandkhpHienTai = FormQuanLyDangKiHocPhan.thoigiandkhpSet;
+        if(thoigiandkhpHienTai != null) {
+            FormQuanLyHocPhan quanLyHocPhan = new FormQuanLyHocPhan(thoigiandkhpHienTai);
+            quanLyHocPhan.show();
+            content.removeAll();
+            content.add("Quản Lý Học Phần", quanLyHocPhan);
+            //quanLyGiaoVu.ResetForm();
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "Chưa Set Thời Gian Đăng Kí Học Phần Hiện Tại");
+        }
     }
 
     private void timKiemGiaoVuActionPerformed(java.awt.event.ActionEvent evt) {
@@ -289,16 +320,16 @@ public class MainGiaoVu extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new MainGiaoVu().setVisible(true);
-            }
-        });
-    }
+//    public static void main(String args[]) {
+//
+//
+//        /* Create and display the form */
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                new MainGiaoVu().setVisible(true);
+//            }
+//        });
+//    }
 
     // Variables declaration - do not modify
     private javax.swing.JTabbedPane content;
