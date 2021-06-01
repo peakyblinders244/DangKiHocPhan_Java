@@ -178,6 +178,10 @@ public class GiaoVuDAO {
         return hocKiDAO.layThongTinHocKiHienTai(tenHocKi,namHoc);
     }
 
+    public boolean capNhatHocKi(Hocki hocki){
+        return hocKiDAO.capNhatHocKi(hocki);
+    }
+
     public boolean themHocKiMoi(Hocki hocki){
         return hocKiDAO.themHocKiMoi(hocki);
     }

@@ -139,5 +139,9 @@ public class GiaoVuService {
     public boolean xoaMonHoc(Monhoc monhoc){
         return dao.xoaMonHoc(monhoc);
     }
+
+    public boolean capNhatHocKi(Hocki hocki){
+        return dao.capNhatHocKi(hocki);
+    }
 }
 

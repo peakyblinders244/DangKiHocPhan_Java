@@ -215,7 +215,11 @@ public class MainGiaoVu extends javax.swing.JFrame {
     }// </editor-fold>
 
     private void quanLyHocKiActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
+        FormQuanLyHocKi quanLyHocKi = new FormQuanLyHocKi();
+        quanLyMonHoc.show();
+        content.removeAll();
+        content.add("Quản Lý Học Kì", quanLyHocKi);
+        //quanLyGiaoVu.ResetForm();
     }
 
     private void thoatActionPerformed(java.awt.event.ActionEvent evt) {
