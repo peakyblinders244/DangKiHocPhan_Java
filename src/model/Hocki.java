@@ -10,13 +10,24 @@ public class Hocki {
     private String tenHocKi;
     private Integer namHoc;
     private Date ngayBatDau;
+    private Integer setHientai;
 
-    public Hocki(String tenHocKi, Integer namHoc, Date ngayBatDau, Date ngayKetThuc) {
+    public Hocki(String tenHocKi, Integer namHoc, Date ngayBatDau, Integer setHientai, Date ngayKetThuc) {
         this.tenHocKi = tenHocKi;
         this.namHoc = namHoc;
         this.ngayBatDau = ngayBatDau;
+        this.setHientai = setHientai;
         this.ngayKetThuc = ngayKetThuc;
     }
+
+    public Integer getSetHientai() {
+        return setHientai;
+    }
+
+    public void setSetHientai(Integer setHientai) {
+        this.setHientai = setHientai;
+    }
+
 
     public Hocki() {
     }

@@ -14,25 +14,21 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 import java.sql.Date;
-import java.util.List;
 
 import static GUI.DangNhap.giaoVuService;
-import static GUI.DangNhap.kiemTraNguoiDung;
 
 /**
  *
  * @author lhqua
  */
 public class FormQuanLyDangKiHocPhan extends javax.swing.JPanel {
-    private Thoigiandkhp thoigiandkhpChon = null;
-    public static Thoigiandkhp thoigiandkhpSet = null;
+    private Thoigiandkhp thoigiandkhpChon = null;public static Thoigiandkhp thoigiandkhpSet = null;
     private Hocki hocki = null;
     /**
      * Creates new form FormQuanLyDangKiHocPhan
      */
     public FormQuanLyDangKiHocPhan(Hocki hockiHienTai) {
         hocki = hockiHienTai;
-
         initComponents();
         DefaultTableModel defaultTableModel = new DefaultTableModel();
         danhSachDangKiHocPhan.setModel(defaultTableModel);
@@ -75,7 +71,6 @@ public class FormQuanLyDangKiHocPhan extends javax.swing.JPanel {
                 }
             });
         }
-
     }
 
     /**
@@ -98,7 +93,6 @@ public class FormQuanLyDangKiHocPhan extends javax.swing.JPanel {
         themDangKiHocPhan = new javax.swing.JButton();
         suaDangKiHocPhan = new javax.swing.JButton();
         lamMoiDanhSach = new javax.swing.JButton();
-        setDangKiHocPhan = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         tenDangKiHocPhan = new javax.swing.JLabel();
         layTenDangKiHocPhan = new javax.swing.JTextField();
@@ -163,7 +157,7 @@ public class FormQuanLyDangKiHocPhan extends javax.swing.JPanel {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
                 jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jScrollPane1)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1039, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         jPanel2Layout.setVerticalGroup(
                 jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -191,26 +185,20 @@ public class FormQuanLyDangKiHocPhan extends javax.swing.JPanel {
             }
         });
 
-        setDangKiHocPhan.setText("Set Kì Đăng Kí");
-        setDangKiHocPhan.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                setDangKiHocPhanActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
                 jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
+                        .addGroup(jPanel6Layout.createSequentialGroup()
                                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(themDangKiHocPhan, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(suaDangKiHocPhan, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
-                                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addComponent(setDangKiHocPhan, javax.swing.GroupLayout.DEFAULT_SIZE, 123, Short.MAX_VALUE)
-                                        .addComponent(lamMoiDanhSach, javax.swing.GroupLayout.DEFAULT_SIZE, 123, Short.MAX_VALUE))
-                                .addGap(20, 20, 20))
+                                        .addGroup(jPanel6Layout.createSequentialGroup()
+                                                .addComponent(themDangKiHocPhan, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(lamMoiDanhSach, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(jPanel6Layout.createSequentialGroup()
+                                                .addGap(91, 91, 91)
+                                                .addComponent(suaDangKiHocPhan, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addContainerGap(48, Short.MAX_VALUE))
         );
         jPanel6Layout.setVerticalGroup(
                 jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -220,9 +208,7 @@ public class FormQuanLyDangKiHocPhan extends javax.swing.JPanel {
                                         .addComponent(themDangKiHocPhan)
                                         .addComponent(lamMoiDanhSach))
                                 .addGap(18, 18, 18)
-                                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(suaDangKiHocPhan)
-                                        .addComponent(setDangKiHocPhan))
+                                .addComponent(suaDangKiHocPhan)
                                 .addContainerGap(40, Short.MAX_VALUE))
         );
 
@@ -230,10 +216,10 @@ public class FormQuanLyDangKiHocPhan extends javax.swing.JPanel {
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
                 jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGap(0, 356, Short.MAX_VALUE)
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                                        .addContainerGap(25, Short.MAX_VALUE)
+                                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addContainerGap()))
         );
@@ -248,9 +234,9 @@ public class FormQuanLyDangKiHocPhan extends javax.swing.JPanel {
         );
 
         tenDangKiHocPhan.setText("Tên Kì Đăng Kí Học Phần");
-        layTenDangKiHocPhan.setText(hocki.getTenHocKi());
+
         tenNamHoc.setText("Năm Học");
-        layNamHoc.setText(hocki.getNamHoc().toString());
+
         ngayBatDau.setText("Ngày Bắt Đầu");
 
         ngayKetThuc.setText("Ngày Kết Thúc");
@@ -262,27 +248,30 @@ public class FormQuanLyDangKiHocPhan extends javax.swing.JPanel {
         jPanel5Layout.setHorizontalGroup(
                 jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel5Layout.createSequentialGroup()
-                                .addGap(56, 56, 56)
-                                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(tenNamHoc, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(tenDangKiHocPhan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addGap(18, 18, 18)
-                                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(layTenDangKiHocPhan)
-                                        .addComponent(layNamHoc, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(18, 18, 18)
+                                .addGap(25, 25, 25)
                                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(tenDangKiHocPhan)
+                                        .addComponent(tenNamHoc, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(33, 33, 33)
+                                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(layTenDangKiHocPhan, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(layNamHoc, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(34, 34, 34)
+                                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(jPanel5Layout.createSequentialGroup()
+                                                .addComponent(ngayKetThuc)
+                                                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addGroup(jPanel5Layout.createSequentialGroup()
+                                                                .addGap(31, 31, 31)
+                                                                .addComponent(jLabel1))
+                                                        .addGroup(jPanel5Layout.createSequentialGroup()
+                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                                .addComponent(layNgayKetThuc, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE))))
                                         .addGroup(jPanel5Layout.createSequentialGroup()
                                                 .addComponent(ngayBatDau, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(layNgayBatDau, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGroup(jPanel5Layout.createSequentialGroup()
-                                                .addComponent(ngayKetThuc)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                        .addComponent(jLabel1)
-                                                        .addComponent(layNgayKetThuc, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                .addContainerGap(26, Short.MAX_VALUE))
+                                                .addComponent(layNgayBatDau, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
                 jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -309,9 +298,10 @@ public class FormQuanLyDangKiHocPhan extends javax.swing.JPanel {
         jPanel3Layout.setHorizontalGroup(
                 jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 729, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(36, 36, 36))
         );
         jPanel3Layout.setVerticalGroup(
                 jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -326,9 +316,12 @@ public class FormQuanLyDangKiHocPhan extends javax.swing.JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -426,19 +419,6 @@ public class FormQuanLyDangKiHocPhan extends javax.swing.JPanel {
     private void lamMoiDanhSachActionPerformed(java.awt.event.ActionEvent evt) {
         ResetForm();
     }
-
-    private void setDangKiHocPhanActionPerformed(java.awt.event.ActionEvent evt) {
-        if(thoigiandkhpChon == null){
-            JOptionPane.showMessageDialog(null, "Bạn Chưa Chọn Học Kì Set");
-            this.ResetForm();
-        }
-        else{
-            thoigiandkhpSet = thoigiandkhpChon;
-
-            JOptionPane.showMessageDialog(this, "Set Kì Đăng Kí Học Phần Thành Công ", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
-        }
-    }
-
     public void ResetForm() {
         layTenDangKiHocPhan.setText(hocki.getTenHocKi());
         layNamHoc.setText(hocki.getNamHoc().toString());
@@ -465,7 +445,6 @@ public class FormQuanLyDangKiHocPhan extends javax.swing.JPanel {
     private javax.swing.JTextField layTenDangKiHocPhan;
     private javax.swing.JLabel ngayBatDau;
     private javax.swing.JLabel ngayKetThuc;
-    private javax.swing.JButton setDangKiHocPhan;
     private javax.swing.JButton suaDangKiHocPhan;
     private javax.swing.JLabel tenDangKiHocPhan;
     private javax.swing.JLabel tenNamHoc;

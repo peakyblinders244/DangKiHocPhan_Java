@@ -24,7 +24,7 @@ import static GUI.DangNhap.kiemTraNguoiDung;
  */
 public class FormQuanLyHocKi extends javax.swing.JPanel {
     private Hocki hockiChon = null;
-    public static Hocki hocKiSet = null;
+
     /**
      * Creates new form FormQuanLyHocKi
      */
@@ -352,8 +352,9 @@ public class FormQuanLyHocKi extends javax.swing.JPanel {
             return;
         }
         Date dateBatDau = Date.valueOf(ngayBatDau);
-        Date dateKetThuc = Date.valueOf(ngayBatDau);
-        Hocki hockiMoi = new Hocki(tenHocKi,namHoc,dateBatDau,dateKetThuc);
+        Date dateKetThuc = Date.valueOf(ngayKetThuc);
+        Hocki hockiMoi = new Hocki(tenHocKi,namHoc,dateBatDau,0,dateKetThuc);
+
         if(giaoVuService.themHocKiMoi(hockiMoi)){
             JOptionPane.showMessageDialog(this, "Thêm Thành Công ", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
         }
@@ -407,7 +408,7 @@ public class FormQuanLyHocKi extends javax.swing.JPanel {
 
     private void xoaHocKiActionPerformed(java.awt.event.ActionEvent evt) {
         if(hockiChon == null){
-            JOptionPane.showMessageDialog(null, "Bạn Chưa Chọn Môn Học Cần Xóa!");
+            JOptionPane.showMessageDialog(null, "Bạn Chưa Chọn Học Kì Cần Xóa!");
             this.ResetForm();
         }
         else{
@@ -448,9 +449,20 @@ public class FormQuanLyHocKi extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "Bạn Chưa Chọn Học Kì Set");
             this.ResetForm();
         }
-        else{
-            hocKiSet = hockiChon;
-            JOptionPane.showMessageDialog(this, "Set Học Kì Thành Công ", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+        else {
+            List<Hocki> hockis = giaoVuService.layDanhSachHocKi();
+            for (Hocki i : hockis) {
+                i.setSetHientai(0);
+                giaoVuService.capNhatHocKi(i);
+            }
+            hockiChon.setSetHientai(1);
+            if (!giaoVuService.capNhatHocKi(hockiChon)) {
+                JOptionPane.showMessageDialog(null, "Set Học Kì Thất Bại!! Mời Kiểm Tra Lại !!");
+                this.ResetForm();
+            } else {
+
+                JOptionPane.showMessageDialog(this, "Set Học Kì Thành Công ", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            }
         }
     }
 
@@ -459,7 +471,6 @@ public class FormQuanLyHocKi extends javax.swing.JPanel {
         layNamHoc.setText("");
         layNgayBatDau.setText("");
         layNgayKetThuc.setText("");
-        hockiChon = null;
     }
 
     // Variables declaration - do not modify

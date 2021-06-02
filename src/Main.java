@@ -1,8 +1,15 @@
 import GUI.DangNhap;
+import dao.SinhVienDAO;
+import dao.Sinhvien_HocphanDAO;
+import model.Hocphanmo;
+import model.Sinhvien;
+import model.Sinhvien_Hocphan;
 import service.GiaoVuService;
 import service.SinhVienService;
 
 import javax.swing.*;
+import java.util.List;
+import java.util.Set;
 
 public class Main {
 
@@ -36,5 +43,18 @@ public class Main {
                 new DangNhap().setVisible(true);
             }
         });
+
+
+        //String string = SinhVienDAO.layThoiGianDangKi();
+//        Sinhvien sinhvien = giaoVuService.laySinhVienBangMaSinhVien("19120001");
+//        Set<Sinhvien_Hocphan> tmp = sinhvien.getSinhvien_hocphans();
+//        for (Sinhvien_Hocphan i: tmp) {
+//            System.out.println(i.toString());
+//        }
+
+//        List<Sinhvien_Hocphan> list = Sinhvien_HocphanDAO.layDanhSachSinhVien_HocPhan();
+//        for (Sinhvien_Hocphan i: list) {
+//            System.out.println(i.toString());
+//        }
     }
 }

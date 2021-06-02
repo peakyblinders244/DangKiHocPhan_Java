@@ -41,7 +41,7 @@ public class Hocphanmo {
     private Integer soLuong;
     private Thoigiandkhp thoigiandkhp;
     private Monhoc monhoc;
-    private Set<Sinhvien> sinhviens = new HashSet<Sinhvien>(0);
+    private Set<Sinhvien_Hocphan> sinhvien_hocphans = new HashSet<Sinhvien_Hocphan>(0);
 
     public int getId() {
         return id;
@@ -128,11 +128,11 @@ public class Hocphanmo {
         this.monhoc = monhoc;
     }
 
-    public Set<Sinhvien> getSinhviens() {
-        return sinhviens;
+    public Set<Sinhvien_Hocphan> getSinhvien_hocphans() {
+        return sinhvien_hocphans;
     }
 
-    public void setSinhviens(Set<Sinhvien> sinhviens) {
-        this.sinhviens = sinhviens;
+    public void setSinhvien_hocphans(Set<Sinhvien_Hocphan> sinhvien_hocphans) {
+        this.sinhvien_hocphans = sinhvien_hocphans;
     }
 }

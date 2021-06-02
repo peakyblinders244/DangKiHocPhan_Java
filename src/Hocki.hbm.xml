@@ -27,5 +27,8 @@
             </key>
             <one-to-many class="model.Thoigiandkhp"/>
         </set>
+        <property name="setHientai">
+            <column name="setHocKi" sql-type="int" not-null="true"/>
+        </property>
     </class>
 </hibernate-mapping>

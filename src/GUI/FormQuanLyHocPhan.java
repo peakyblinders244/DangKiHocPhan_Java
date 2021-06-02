@@ -5,8 +5,7 @@
  */
 package GUI;
 
-import model.Hocphanmo;
-import model.Thoigiandkhp;
+import model.*;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
@@ -14,6 +13,7 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 import java.util.List;
+import java.util.Set;
 
 import static GUI.DangNhap.giaoVuService;
 import static GUI.DangNhap.kiemTraNguoiDung;
@@ -24,11 +24,20 @@ import static GUI.DangNhap.kiemTraNguoiDung;
  */
 public class FormQuanLyHocPhan extends javax.swing.JPanel {
     private Thoigiandkhp thoigiandkhp = null;
+    private Hocphanmo hocphanmoChon = null;
     /**
      * Creates new form FormQuanLyHocPhan
      */
-    public FormQuanLyHocPhan(Thoigiandkhp thoigiandkhpHienTai) {
-        thoigiandkhp = thoigiandkhpHienTai;
+    public FormQuanLyHocPhan() {
+        Hocki hockiSet = null;
+        List<Hocki> hockis = giaoVuService.layDanhSachHocKi();
+        for (Hocki i: hockis) {
+            if(i.getSetHientai().equals(1)){
+                hockiSet = i;
+                break;
+            }
+        }
+        thoigiandkhp = giaoVuService.layThongtinThoiGianDKHPHienTai(hockiSet.getTenHocKi(),hockiSet.getNamHoc());
         initComponents();
         DefaultTableModel defaultTableModel = new DefaultTableModel();
         danhSachHocPhan.setModel(defaultTableModel);
@@ -40,13 +49,16 @@ public class FormQuanLyHocPhan extends javax.swing.JPanel {
         defaultTableModel.addColumn("Ca");
         defaultTableModel.addColumn("Số Lượng");
         defaultTableModel.addColumn("Số Tín Chỉ");
+
         if(kiemTraNguoiDung == 0) {
-            List<Hocphanmo> hocphanmoList = giaoVuService.layDanhSachHocPhanMoTrongHocKi(thoigiandkhp.getHocki().getTenHocKi(),thoigiandkhp.getHocki().getNamHoc());
+            if(thoigiandkhp != null) {
+                List<Hocphanmo> hocphanmoList = giaoVuService.layDanhSachHocPhanMoTrongHocKi(thoigiandkhp.getHocki().getTenHocKi(), thoigiandkhp.getHocki().getNamHoc());
 
-            for (Hocphanmo i : hocphanmoList) {
+                for (Hocphanmo i : hocphanmoList) {
 
-                Object[] tmp = new Object[]{i.getMonhoc().getMaMonHoc(),i.getMaGvlt(),i.getTenHocPhan(),i.getTenPhongHoc(),i.getThu(),i.getCa(),i.getSoLuong(),i.getMonhoc().getSoTinChi()};
-                defaultTableModel.addRow(tmp);
+                    Object[] tmp = new Object[]{i.getMonhoc().getMaMonHoc(), i.getMaGvlt(), i.getTenHocPhan(), i.getTenPhongHoc(), i.getThu(), i.getCa(), i.getSoLuong(), i.getMonhoc().getSoTinChi()};
+                    defaultTableModel.addRow(tmp);
+                }
             }
             ListSelectionModel listSelectionModel = danhSachHocPhan.getSelectionModel();
             listSelectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -72,10 +84,19 @@ public class FormQuanLyHocPhan extends javax.swing.JPanel {
                     layCa.setText(ca);
                     laySoLuong.setText(soLuong);
                     laySoTinChi.setText(soTinChi);
-
+                    List<Hocphanmo> hocphanmos = giaoVuService.layDanhSachHocPhanMoTrongHocKi(thoigiandkhp.getHocki().getTenHocKi(),thoigiandkhp.getHocki().getNamHoc());
+                    System.out.println(thoigiandkhp.toString());
+                    for (Hocphanmo i: hocphanmos) {
+                        if(i.getMaGvlt().equals(maGVLT) && i.getCa().toString().equals(ca) && i.getTenHocPhan().equals(tenHocPhan)){
+                            hocphanmoChon = i;
+                        }
+                        System.out.println(i.toString());
+                    }
+                    System.out.println(hocphanmoChon.toString());
                 }
             });
         }
+
     }
 
     /**
@@ -347,15 +368,113 @@ public class FormQuanLyHocPhan extends javax.swing.JPanel {
     }// </editor-fold>
 
     private void xoaHocPhanActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
+        String strNull = "";
+        String maMonHoc = layMaMonHoc.getText();
+        String maGVLT = layMaGVLT.getText();
+        String tenHocPhan = layTenHocPhan.getText();
+        String phongHoc = layPhongHoc.getText();
+        String thu = layThu.getText();
+        String strCa = layCa.getText();
+        String strSoLuong = laySoLuong.getText();
+        String strSoTinChi = laySoTinChi.getText();
+        if (maMonHoc.equals(strNull) || maGVLT.equals(strNull) || tenHocPhan.equals(strNull) || maGVLT.equals(strNull)
+                || phongHoc.equals(strNull) || thu.equals(strNull) || strCa.equals(strNull) || strSoLuong.equals(strNull) || strSoTinChi.equals(strNull)) {
+            JOptionPane.showMessageDialog(null, "Không Được Để Trống Ô Dữ Liệu !");
+            this.ResetForm();
+            return;
+        }
+        int ca = 0;
+        int soLuong = 0;
+        int soTinchi = 0;
+        try {
+            ca = Integer.parseInt(strCa);
+            soLuong = Integer.parseInt(strSoLuong);
+            soTinchi = Integer.parseInt(strSoTinChi);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Kiểm Tra Lại Dữ Liệu Nhập !!");
+            this.ResetForm();
+            return;
+        }
+        Hocphanmo hocphanmo = null;
+        List<Hocphanmo> hocphanmos = giaoVuService.layDanhSachHocPhanMoTrongHocKi(thoigiandkhp.getHocki().getTenHocKi(),thoigiandkhp.getHocki().getNamHoc());
+
+        for (Hocphanmo i: hocphanmos) {
+            if(i.getMaGvlt().equals(maGVLT) && i.getCa().equals(ca) && i.getTenHocPhan().equals(tenHocPhan)){
+                hocphanmo = i;
+            }
+        }
+
+        if(hocphanmo == null){
+            JOptionPane.showMessageDialog(null, "Xóa Thất Bại!! Mời Kiểm Tra Lại");
+            return;
+        }
+
+        if (giaoVuService.xoaHocPhanTrongKi(hocphanmo)) {
+            JOptionPane.showMessageDialog(null, "Xóa Thành Công!");
+        } else {
+            JOptionPane.showMessageDialog(null, "Xóa Thất Bại!! Mời Kiểm Tra Lại");
+        }
     }
 
     private void themHocPhanActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
+        if(thoigiandkhp == null){
+            JOptionPane.showMessageDialog(null, "Chưa Tạo Thời Gian Đăng Kí Học Phần");
+        }
+        else {
+            String strNull = "";
+            String maMonHoc = layMaMonHoc.getText();
+            String maGVLT = layMaGVLT.getText();
+            String tenHocPhan = layTenHocPhan.getText();
+            String phongHoc = layPhongHoc.getText();
+            String thu = layThu.getText();
+            String strCa = layCa.getText();
+            String strSoLuong = laySoLuong.getText();
+            String strSoTinChi = laySoTinChi.getText();
+            if (maMonHoc.equals(strNull) || maGVLT.equals(strNull) || tenHocPhan.equals(strNull) || maGVLT.equals(strNull)
+                    || phongHoc.equals(strNull) || thu.equals(strNull) || strCa.equals(strNull) || strSoLuong.equals(strNull) || strSoTinChi.equals(strNull)) {
+                JOptionPane.showMessageDialog(null, "Không Được Để Trống Ô Dữ Liệu !");
+                this.ResetForm();
+                return;
+            }
+
+            Monhoc monhoc = giaoVuService.layThongTinMonHocBangMaMonHoc(maMonHoc);
+            Set<Giaovien> giaovienMonHoc = monhoc.getGiaoviens();
+            boolean flag = false;
+            for (Giaovien i : giaovienMonHoc) {
+                if (i.getMaGiaoVien().equals(maGVLT)) {
+                    flag = true;
+                    break;
+                }
+            }
+            if (flag == false) {
+                JOptionPane.showMessageDialog(null, "Kiểm Tra Lại Dữ Liệu Giáo Viên Chủ Nhiệm !");
+                this.ResetForm();
+                return;
+            }
+            int ca = 0;
+            int soLuong = 0;
+            int soTinchi = 0;
+            try {
+                ca = Integer.parseInt(strCa);
+                soLuong = Integer.parseInt(strSoLuong);
+                soTinchi = Integer.parseInt(strSoTinChi);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Kiểm Tra Lại Dữ Liệu Nhập !!");
+                this.ResetForm();
+                return;
+            }
+            //Hocphanmo(String maGvlt, String tenHocPhan, String tenPhongHoc, String thu, Integer ca, Integer soLuong, Thoigiandkhp thoigiandkhp, Monhoc monhoc)
+            Hocphanmo hocphanmoNew = new Hocphanmo(maGVLT, tenHocPhan, phongHoc, thu, ca, soLuong, thoigiandkhp, monhoc);
+            if (giaoVuService.themHocPhanTrongKi(hocphanmoNew)) {
+                JOptionPane.showMessageDialog(null, "Thêm Thành Công!");
+            } else {
+                JOptionPane.showMessageDialog(null, "Thêm Thất Bại!! Mời Kiểm Tra Lại");
+            }
+        }
     }
 
     private void xemThongTinActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
+        new FormXemThongTinHocPhan(hocphanmoChon).setVisible(true);
     }
 
     private void lamMoiActionPerformed(java.awt.event.ActionEvent evt) {

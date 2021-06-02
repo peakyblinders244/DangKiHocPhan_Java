@@ -1,26 +1,39 @@
 package dao;
 
-import model.*;
+import model.Hocphanmo;
+import model.Sinhvien;
+import model.Sinhvien_Hocphan;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import util.HibernateUtil;
 
-import java.util.Iterator;
 import java.util.List;
 
-public class HocPhanMoDAO {
-    private ThoiGianDKHPDAO thoiGianDKHPDAO = new ThoiGianDKHPDAO();
-    private MonHocDAO monHocDAO = new MonHocDAO();
+public class Sinhvien_HocphanDAO {
+    public List<Sinhvien_Hocphan> layDanhSachSinhVien_HocPhan(){
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        List<Sinhvien_Hocphan> danhSachSinhVien_HocPhan = null;
+        try {
+            final String hql = "select st from Sinhvien_Hocphan st";
+            Query query = session.createQuery(hql);
 
-    public Hocphanmo timKiemHocPhanMoBangId(int id){
-        Hocphanmo hocphanmo = null;
+            danhSachSinhVien_HocPhan = query.list();
+        } catch (HibernateException e) {
+            System.err.println(e);
+        } finally {
+            session.close();
+        }
+        return danhSachSinhVien_HocPhan;
+    }
+
+    public Sinhvien_Hocphan timKiemSinhVienHocPhanBangId(int id) {
+        Sinhvien_Hocphan sinhvien_hocphan = null;
         Session session = HibernateUtil.getSessionFactory().openSession();
         try
         {
-            hocphanmo = (Hocphanmo) session.get(Hocphanmo.class,id);
-
+            sinhvien_hocphan = (Sinhvien_Hocphan) session.get(Sinhvien_Hocphan.class,id);
 
         }catch (HibernateException e){
             System.err.println(e);
@@ -28,55 +41,20 @@ public class HocPhanMoDAO {
         }finally {
             session.close();
         }
-        return hocphanmo;
+        return sinhvien_hocphan;
     }
 
-    public List<Hocphanmo> layDanhSachHocPhanMo(){
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        List<Hocphanmo> hocphanmos = null;
-        try {
-            final String hql = "select hpm from Hocphanmo hpm";
-            Query query = session.createQuery(hql);
-
-            hocphanmos = query.list();
-        } catch (HibernateException e) {
-            System.err.println(e);
-        } finally {
-            session.close();
-        }
-        return hocphanmos;
-    }
-
-    public List<Hocphanmo> layDanhSachHocPhanMoTrongHocKi(String maHocKi,int nam){
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        List<Hocphanmo> hocphanmos = null;
-        Thoigiandkhp thoigiandkhp = thoiGianDKHPDAO.layThongtinThoiGianDKHPHienTai(maHocKi, nam);
-
-        try {
-            final String hql = "select hpm from Hocphanmo hpm where hpm.thoigiandkhp=:idThoiGianDKHP";
-            Query query = session.createQuery(hql);
-            query.setInteger("idThoiGianDKHP",thoigiandkhp.getId());
-            hocphanmos = query.list();
-        } catch (HibernateException e) {
-            System.err.println(e);
-        } finally {
-            session.close();
-        }
-        return hocphanmos;
-    }
-
-
-
-    public boolean themHocPhanTrongKi(Hocphanmo hocphanmo){
+    public boolean themSinhVienVaoHocPhan(Sinhvien_Hocphan sinhvien_hocphan){
         boolean ketQua = true;
+        if(timKiemSinhVienHocPhanBangId(sinhvien_hocphan.getId()) != null){
+            return false;
+        }
         Session session = HibernateUtil.getSessionFactory().openSession();
-
         Transaction transaction = null;
         try {
 
             transaction = session.beginTransaction();
-
-            session.merge(hocphanmo);
+            session.save(sinhvien_hocphan);
             transaction.commit();
         }catch (HibernateException e){
             assert transaction != null;
@@ -89,14 +67,14 @@ public class HocPhanMoDAO {
         return ketQua;
     }
 
-    public boolean xoaHocPhanTrongKi(Hocphanmo hocphanmo){
+    public boolean xoaSinhVienTrongHocPhan(Sinhvien_Hocphan sinhvien_hocphan){
         boolean ketQua = true;
         Session session = HibernateUtil.getSessionFactory().openSession();
-
         Transaction transaction = null;
         try {
+
             transaction = session.beginTransaction();
-            session.delete(hocphanmo);
+            session.delete(sinhvien_hocphan);
             transaction.commit();
         }catch (HibernateException e){
             assert transaction != null;

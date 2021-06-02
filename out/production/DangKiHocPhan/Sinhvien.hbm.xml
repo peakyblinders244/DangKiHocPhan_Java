@@ -33,13 +33,11 @@
             <column name="idLop" not-null="true"/>
         </many-to-one>
 
-        <set name="hocphanmos" inverse="false" table="sinhvien_hocphan" fetch="join" lazy="false" cascade="save-update">
+        <set name="sinhvien_hocphans" inverse="true" table="sinhvien_hocphan" fetch="join" lazy="false" cascade="save-update">
             <key>
                 <column name="idSinhVien" not-null="true"/>
             </key>
-            <many-to-many entity-name="model.Hocphanmo">
-                <column name="idHocPhanMo" not-null="true"/>
-            </many-to-many>
+            <one-to-many class="model.Sinhvien_Hocphan"/>
         </set>
     </class>
 </hibernate-mapping>

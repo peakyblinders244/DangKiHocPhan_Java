@@ -7,19 +7,21 @@ package GUI;
 
 import model.Hocki;
 import model.Thoigiandkhp;
+import service.GiaoVuService;
+
 
 import javax.swing.*;
+import java.util.List;
 
 /**
  *
  * @author lhqua
  */
 public class MainGiaoVu extends javax.swing.JFrame {
-    public Hocki hockiHienTai = null;
-    public Thoigiandkhp thoigiandkhpHienTai = null;
     /**
      * Creates new form MainGiaoVu
      */
+    private GiaoVuService giaoVuService = new GiaoVuService();
     public MainGiaoVu() {
         initComponents();
     }
@@ -278,7 +280,14 @@ public class MainGiaoVu extends javax.swing.JFrame {
     }
 
     private void quanLyDKHPActionPerformed(java.awt.event.ActionEvent evt) {
-        hockiHienTai = FormQuanLyHocKi.hocKiSet;
+        Hocki hockiHienTai = null;
+        List<Hocki> hockis = giaoVuService.layDanhSachHocKi();
+        for (Hocki i: hockis) {
+            if(i.getSetHientai().equals(1)){
+                hockiHienTai = i;
+                break;
+            }
+        }
         if(hockiHienTai != null) {
             FormQuanLyDangKiHocPhan quanLyDangKiHocPhan = new FormQuanLyDangKiHocPhan(hockiHienTai);
             quanLyDangKiHocPhan.show();
@@ -292,17 +301,14 @@ public class MainGiaoVu extends javax.swing.JFrame {
     }
 
     private void quanLyHocPhanActionPerformed(java.awt.event.ActionEvent evt) {
-        thoigiandkhpHienTai = FormQuanLyDangKiHocPhan.thoigiandkhpSet;
-        if(thoigiandkhpHienTai != null) {
-            FormQuanLyHocPhan quanLyHocPhan = new FormQuanLyHocPhan(thoigiandkhpHienTai);
-            quanLyHocPhan.show();
-            content.removeAll();
-            content.add("Quản Lý Học Phần", quanLyHocPhan);
-            //quanLyGiaoVu.ResetForm();
-        }
-        else{
-            JOptionPane.showMessageDialog(null, "Chưa Set Thời Gian Đăng Kí Học Phần Hiện Tại");
-        }
+
+
+        FormQuanLyHocPhan quanLyHocPhan = new FormQuanLyHocPhan();
+        quanLyHocPhan.show();
+        content.removeAll();
+        content.add("Quản Lý Học Phần", quanLyHocPhan);
+        //quanLyGiaoVu.ResetForm();
+
     }
 
     private void timKiemGiaoVuActionPerformed(java.awt.event.ActionEvent evt) {

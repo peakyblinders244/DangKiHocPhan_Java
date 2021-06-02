@@ -15,7 +15,7 @@ public class Sinhvien {
     private String taiKhoan;
     private String matKhau;
     private Lophoc lopHoc;
-    private Set<Hocphanmo> hocphanmos = new HashSet<Hocphanmo>(0);
+    private Set<Sinhvien_Hocphan> sinhvien_hocphans = new HashSet<Sinhvien_Hocphan>(0);
 
     public int getId() {
         return id;
@@ -23,6 +23,14 @@ public class Sinhvien {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public Set<Sinhvien_Hocphan> getSinhvien_hocphans() {
+        return sinhvien_hocphans;
+    }
+
+    public void setSinhvien_hocphans(Set<Sinhvien_Hocphan> sinhvien_hocphans) {
+        this.sinhvien_hocphans = sinhvien_hocphans;
     }
 
     public String getMaSinhVien() {
@@ -127,11 +135,7 @@ public class Sinhvien {
                 '}';
     }
 
-    public Set<Hocphanmo> getHocphanmos() {
-        return hocphanmos;
-    }
 
-    public void setHocphanmos(Set<Hocphanmo> hocphanmos) {
-        this.hocphanmos = hocphanmos;
-    }
+
+
 }

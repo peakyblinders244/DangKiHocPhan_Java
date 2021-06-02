@@ -7,6 +7,8 @@ import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import util.HibernateUtil;
 
+import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -110,7 +112,7 @@ public class SinhVienDAO {
         try{
             String hql = "select sv from Sinhvien sv where sv.maSinhVien=:maSinhVien";
             Query query = session.createQuery(hql);
-            query.setString("maSinhVien",maSinhVien);
+            query.setParameter("maSinhVien",maSinhVien);
 
             sinhvien = (Sinhvien) query.uniqueResult();
         }catch (HibernateException e){
@@ -145,73 +147,99 @@ public class SinhVienDAO {
         return ketQua;
     }
 
-    public boolean sinhVienThemHocPhan(Sinhvien sinhvien, Hocphanmo hocphanmo){
-        boolean ketQua = true;
+//    public boolean sinhVienThemHocPhan(Sinhvien sinhvien, Hocphanmo hocphanmo){
+//        boolean ketQua = true;
 
-        if(laySinhVienBangMaSinhVien(sinhvien.getMaSinhVien()) == null){
-            return false;
-        }
-        Set<Hocphanmo> hocphanmos = sinhvien.getHocphanmos();
-        if(hocphanmos.size() == 8){
-            return false;
-        }
-        for (Hocphanmo i : hocphanmos) {
-            if(i == hocphanmo){
-                return false;
-            }
-            if(i.getCa().equals(hocphanmo.getCa()) && i.getThu().equals(hocphanmo.getThu())){
-                return false;
-            }
-        }
-        if(!sinhvien.getHocphanmos().add(hocphanmo)){
-            return false;
-        }
+//        if(laySinhVienBangMaSinhVien(sinhvien.getMaSinhVien()) == null){
+//            return false;
+//        }
+//        Set<Hocphanmo> hocphanmos = sinhvien.getHocphanmos();
+//        if(hocphanmos.size() == 8){
+//            return false;
+//        }
+//        for (Hocphanmo i : hocphanmos) {
+//            if(i == hocphanmo){
+//                return false;
+//            }
+//            if(i.getCa().equals(hocphanmo.getCa()) && i.getThu().equals(hocphanmo.getThu())){
+//                return false;
+//            }
+//        }
+//        if(!sinhvien.getHocphanmos().add(hocphanmo)){
+//            return false;
+//        }
+//
+//        Session session = HibernateUtil.getSessionFactory().openSession();
+//        Transaction transaction = null;
+//        try {
+//
+//            transaction = session.beginTransaction();
+//            session.saveOrUpdate(sinhvien);
+//            transaction.commit();
+//        }catch (HibernateException e){
+//            assert transaction != null;
+//            transaction.rollback();
+//            System.err.println(e);
+//            ketQua = false;
+//        }finally {
+//            session.close();
+//        }
+//        return ketQua;
+//    }
 
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        Transaction transaction = null;
-        try {
+//    public boolean sinhVienXoaHocPhan(Sinhvien sinhvien, Hocphanmo hocphanmo){
+//        boolean ketQua = true;
 
-            transaction = session.beginTransaction();
-            session.saveOrUpdate(sinhvien);
-            transaction.commit();
-        }catch (HibernateException e){
-            assert transaction != null;
-            transaction.rollback();
-            System.err.println(e);
-            ketQua = false;
-        }finally {
-            session.close();
-        }
-        return ketQua;
-    }
+//        if(laySinhVienBangMaSinhVien(sinhvien.getMaSinhVien()) == null){
+//
+//            return false;
+//        }
+//
+//        if(!sinhvien.getHocphanmos().remove(hocphanmo)){
+//            return false;
+//        }
+//
+//        Session session = HibernateUtil.getSessionFactory().openSession();
+//        Transaction transaction = null;
+//        try {
+//
+//            transaction = session.beginTransaction();
+//            session.saveOrUpdate(sinhvien);
+//            transaction.commit();
+//        }catch (HibernateException e){
+//            assert transaction != null;
+//            transaction.rollback();
+//            System.err.println(e);
+//            ketQua = false;
+//        }finally {
+//            session.close();
+//        }
+//        return ketQua;
+//    }
+//Sinhvien sinhvien,Hocphanmo hocphanmo
+//    public static String layThoiGianDangKi(){
+//        String ketQua ="";
+//        Session session = HibernateUtil.getSessionFactory().openSession();
+//        try{
+//            String hql = "from Sinhvien sv left join ";
+//            Query query = session.createQuery(hql);
+//
+//            ArrayList<Object[]> danhSach = (ArrayList<Object[]>) query.list();
+//            for(int i = 0 ; i<danhSach.size() ; i++ ){
+//                Object[] objects = danhSach.get(i);
+//                Sinhvien sinhvien1 = (Sinhvien)objects[0];
+//                Hocphanmo hocphanmo1 =(Hocphanmo) objects[1];
+//                //Date ngayDangKi = (Date) objects[2];
+//                System.out.println(sinhvien1.toString());
+//                System.out.println(hocphanmo1.toString());
+//                //System.out.println(ngayDangKi.toString());
+//            }
+//        }catch (HibernateException e){
+//            System.err.println(e);
+//        }finally {
+//            session.close();
+//        }
 
-    public boolean sinhVienXoaHocPhan(Sinhvien sinhvien, Hocphanmo hocphanmo){
-        boolean ketQua = true;
-
-        if(laySinhVienBangMaSinhVien(sinhvien.getMaSinhVien()) == null){
-
-            return false;
-        }
-
-        if(!sinhvien.getHocphanmos().remove(hocphanmo)){
-            return false;
-        }
-
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        Transaction transaction = null;
-        try {
-
-            transaction = session.beginTransaction();
-            session.saveOrUpdate(sinhvien);
-            transaction.commit();
-        }catch (HibernateException e){
-            assert transaction != null;
-            transaction.rollback();
-            System.err.println(e);
-            ketQua = false;
-        }finally {
-            session.close();
-        }
-        return ketQua;
-    }
+//        return ketQua;
+//    }
 }

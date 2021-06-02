@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="model.Sinhvien_Hocphan" table="sinhvien_hocphan" schema="dangkihocphan">
+        <id name="id">
+            <column name="id" sql-type="int"/>
+        </id>
+        <many-to-one name="sinhvien"  class="model.Sinhvien" fetch="join" lazy="false" cascade="save-update">
+            <column name="idSinhVien" not-null="true"/>
+        </many-to-one>
+        <many-to-one name="hocphanmo"  class="model.Hocphanmo" fetch="join" lazy="false" cascade="save-update">
+            <column name="idHocPhanMo" not-null="true"/>
+        </many-to-one>
+        <property name="ngayDangKi">
+            <column name="ngayDangKi" sql-type="date" not-null="true"/>
+        </property>
+    </class>
+</hibernate-mapping>

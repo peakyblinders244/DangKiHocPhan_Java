@@ -21,13 +21,13 @@ public class SinhVienService {
         return dao.capNhatSinhVien(sinhvien);
     }
 
-    public boolean sinhVienThemHocPhan(Sinhvien sinhvien, Hocphanmo hocphanmo){
-        return dao.sinhVienThemHocPhan(sinhvien,hocphanmo);
-    }
-
-    public boolean sinhVienXoaHocPhan(Sinhvien sinhvien, Hocphanmo hocphanmo){
-        return dao.sinhVienXoaHocPhan(sinhvien,hocphanmo);
-    }
+//    public boolean sinhVienThemHocPhan(Sinhvien sinhvien, Hocphanmo hocphanmo){
+//        return dao.sinhVienThemHocPhan(sinhvien,hocphanmo);
+//    }
+//
+//    public boolean sinhVienXoaHocPhan(Sinhvien sinhvien, Hocphanmo hocphanmo){
+//        return dao.sinhVienXoaHocPhan(sinhvien,hocphanmo);
+//    }
 
 
 }
