@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Set;
 
 public class SinhVienDAO {
+    private  Sinhvien_HocphanDAO sinhvien_hocphanDAO = new Sinhvien_HocphanDAO();
     public List<Sinhvien> layDanhSachSinhVien() {
         Session session = HibernateUtil.getSessionFactory().openSession();
         List<Sinhvien> danhSachSinhVien = null;
@@ -242,4 +243,7 @@ public class SinhVienDAO {
 
 //        return ketQua;
 //    }
+    public boolean themSinhVienVaoHocPhan(Sinhvien_Hocphan sinhvien_hocphan){
+        return sinhvien_hocphanDAO.themSinhVienVaoHocPhan(sinhvien_hocphan);
+    }
 }

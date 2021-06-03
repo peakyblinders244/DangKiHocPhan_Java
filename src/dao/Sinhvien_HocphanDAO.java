@@ -10,6 +10,7 @@ import org.hibernate.query.Query;
 import util.HibernateUtil;
 
 import java.util.List;
+import java.util.Set;
 
 public class Sinhvien_HocphanDAO {
     public List<Sinhvien_Hocphan> layDanhSachSinhVien_HocPhan(){
@@ -49,12 +50,17 @@ public class Sinhvien_HocphanDAO {
         if(timKiemSinhVienHocPhanBangId(sinhvien_hocphan.getId()) != null){
             return false;
         }
+//        Hocphanmo hocphanmo = sinhvien_hocphan.getHocphanmo();
+//        Set<Sinhvien_Hocphan> sinhvien_hocphans = hocphanmo.getSinhvien_hocphans();
+//        if(hocphanmo.getSoLuong().intValue() >sinhvien_hocphans.size()){
+//            return false;
+//        }
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction transaction = null;
         try {
 
             transaction = session.beginTransaction();
-            session.save(sinhvien_hocphan);
+            session.merge(sinhvien_hocphan);
             transaction.commit();
         }catch (HibernateException e){
             assert transaction != null;

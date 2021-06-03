@@ -8,6 +8,7 @@ package GUI;
 import model.*;
 import service.GiaoVuService;
 
+import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.util.Set;
 
@@ -227,6 +228,11 @@ public class FormXemThongTinHocPhan extends javax.swing.JFrame {
         defaultTableModel.addColumn("Thời Gian Học");
         defaultTableModel.addColumn("Thời Gian Đăng Kí");
         String maSinhVien = layMaSinhVien.getText();
+        String strNull = "";
+        if(maSinhVien.equals(strNull)){
+            JOptionPane.showMessageDialog(null, "Bạn Chưa Nhập Mã Số Sinh Viên Cần Tìm !!");
+            return;
+        }
         if(hocphanmo != null){
             Set<Sinhvien_Hocphan> sinhviens = hocphanmo.getSinhvien_hocphans();
 

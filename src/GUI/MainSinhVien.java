@@ -5,12 +5,16 @@
  */
 package GUI;
 
+import service.GiaoVuService;
+import service.SinhVienService;
+
 /**
  *
  * @author lhqua
  */
 public class MainSinhVien extends javax.swing.JFrame {
-
+    private GiaoVuService giaoVuService = new GiaoVuService();
+    private SinhVienService sinhVienService = new SinhVienService();
     /**
      * Creates new form MainSinhVien
      */
@@ -174,7 +178,7 @@ public class MainSinhVien extends javax.swing.JFrame {
     }
 
     private void dangKiHocPhanMouseClicked(java.awt.event.MouseEvent evt) {
-        // TODO add your handling code here:
+       new FormDangKiHocPhan().setVisible(true);
 
     }
 

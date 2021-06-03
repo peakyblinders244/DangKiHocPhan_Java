@@ -154,5 +154,13 @@ public class GiaoVuService {
     public Giaovien layGiaoVienBangMaGiaoVien(String maGiaoVien){
         return dao.layGiaoVienBangMaGiaoVien(maGiaoVien);
     }
+
+    public List<Sinhvien_Hocphan> layDanhSachSinhVien_HocPhan(){
+        return dao.layDanhSachSinhVien_HocPhan();
+    }
+
+    public int laySoLuongSinhVienTrongHocPhan(Hocphanmo hocphanmo){
+        return dao.laySoLuongSinhVienTrongHocPhan(hocphanmo);
+    }
 }
 

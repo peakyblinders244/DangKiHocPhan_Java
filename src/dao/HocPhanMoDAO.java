@@ -9,6 +9,7 @@ import util.HibernateUtil;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 public class HocPhanMoDAO {
     private ThoiGianDKHPDAO thoiGianDKHPDAO = new ThoiGianDKHPDAO();
@@ -107,5 +108,13 @@ public class HocPhanMoDAO {
             session.close();
         }
         return ketQua;
+    }
+
+    public int laySoLuongSinhVienTrongHocPhan(Hocphanmo hocphanmo){
+        int count = 0;
+        Hocphanmo hocphanmoCanTim = timKiemHocPhanMoBangId(hocphanmo.getId());
+        Set<Sinhvien_Hocphan> sinhvien_hocphans = hocphanmoCanTim.getSinhvien_hocphans();
+        count = sinhvien_hocphans.size();
+        return count;
     }
 }

@@ -3,6 +3,7 @@ package service;
 import dao.SinhVienDAO;
 import model.Hocphanmo;
 import model.Sinhvien;
+import model.Sinhvien_Hocphan;
 
 import java.util.List;
 
@@ -19,6 +20,10 @@ public class SinhVienService {
 
     public boolean capNhatSinhVien(Sinhvien sinhvien){
         return dao.capNhatSinhVien(sinhvien);
+    }
+
+    public boolean themSinhVienVaoHocPhan(Sinhvien_Hocphan sinhvien_hocphan){
+        return dao.themSinhVienVaoHocPhan(sinhvien_hocphan);
     }
 
 //    public boolean sinhVienThemHocPhan(Sinhvien sinhvien, Hocphanmo hocphanmo){

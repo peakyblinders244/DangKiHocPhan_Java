@@ -276,7 +276,11 @@ public class MainGiaoVu extends javax.swing.JFrame {
     }
 
     private void quanLySinhVienActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
+        FormQuanLySinhVienMonHoc quanLySinhVienMonHoc = new FormQuanLySinhVienMonHoc();
+        quanLySinhVienMonHoc.show();
+        content.removeAll();
+        content.add("Quản Lý Sinh Viên ", quanLySinhVienMonHoc);
+
     }
 
     private void quanLyDKHPActionPerformed(java.awt.event.ActionEvent evt) {
@@ -312,7 +316,11 @@ public class MainGiaoVu extends javax.swing.JFrame {
     }
 
     private void timKiemGiaoVuActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
+        FormDanhSachGiaoVu formDanhSachGiaoVu = new FormDanhSachGiaoVu();
+        formDanhSachGiaoVu.show();
+        content.removeAll();
+        content.add("Danh Sách Giáo Vụ", formDanhSachGiaoVu);
+        //thongTinTaiKhoan.ResetForm
     }
 
     private void xemThongTinTaiKhoanActionPerformed(java.awt.event.ActionEvent evt) {
