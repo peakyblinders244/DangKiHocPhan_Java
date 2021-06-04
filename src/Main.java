@@ -40,7 +40,13 @@ public class Main {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new DangNhap().setVisible(true);
+                //new DangNhap().setVisible(true);
+                JFrame frame = new DangNhap();
+                frame.setResizable(false);
+                frame.setTitle("Đăng Nhập");
+                frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                frame.setLocationRelativeTo(null);
+                frame.setVisible(true);
             }
         });
 

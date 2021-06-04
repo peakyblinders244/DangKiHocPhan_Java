@@ -420,7 +420,13 @@ public class FormQuanLyHocPhan extends javax.swing.JPanel {
     }
 
     private void xemThongTinActionPerformed(java.awt.event.ActionEvent evt) {
-        new FormXemThongTinHocPhan(hocphanmoChon).setVisible(true);
+        //new FormXemThongTinHocPhan(hocphanmoChon).setVisible(true);
+        JFrame frame = new FormXemThongTinHocPhan(hocphanmoChon);
+        frame.setResizable(false);
+        frame.setTitle("Đăng Nhập");
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
     }
 
     private void lamMoiActionPerformed(java.awt.event.ActionEvent evt) {

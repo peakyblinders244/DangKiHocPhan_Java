@@ -294,7 +294,13 @@ public class FormQuanLyLopHoc extends javax.swing.JPanel {
 
     private void xemThongTinLopActionPerformed(java.awt.event.ActionEvent evt) {
         if(lophocChon != null){
-            new DanhSachSinhVienTrongLop(lophocChon).setVisible(true);
+            //new DanhSachSinhVienTrongLop(lophocChon).setVisible(true);
+            JFrame frame = new DanhSachSinhVienTrongLop(lophocChon);
+            frame.setResizable(false);
+            frame.setTitle("Đăng Nhập");
+            frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            frame.setLocationRelativeTo(null);
+            frame.setVisible(true);
         }
         else {
             JOptionPane.showMessageDialog(null, "Chưa Chọn Lớp Học Cần Xem !");

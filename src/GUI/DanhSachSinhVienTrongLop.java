@@ -301,8 +301,6 @@ public class DanhSachSinhVienTrongLop extends javax.swing.JFrame {
 
     private void capNhatSinhVienActionPerformed(java.awt.event.ActionEvent evt) {
         if(sinhvienChon != null) {
-
-
             String strNull = "";
             String maSinhVien = layMaSinhVien.getText();
             String tenSinhVien = layTenSinhVien.getText();

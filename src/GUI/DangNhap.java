@@ -113,7 +113,13 @@ public class DangNhap extends javax.swing.JFrame {
             if(giaovu != null){
                 //code
                 kiemTraNguoiDung = 0;
-                new MainGiaoVu().setVisible(true);
+                JFrame frame = new MainGiaoVu();
+                frame.setResizable(false);
+                frame.setTitle("Giáo Vụ");
+                frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                frame.setLocationRelativeTo(null);
+                frame.setVisible(true);
+                //new MainGiaoVu().setVisible(true);
                 dispose();
 
             }
@@ -122,7 +128,13 @@ public class DangNhap extends javax.swing.JFrame {
                 if(sinhvien != null){
                     //code
                     kiemTraNguoiDung = 1;
-                    new MainSinhVien().setVisible(true);
+                    //new MainSinhVien().setVisible(true);
+                    JFrame frame = new MainSinhVien();
+                    frame.setResizable(false);
+                    frame.setTitle("Sinh Viên");
+                    frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                    frame.setLocationRelativeTo(null);
+                    frame.setVisible(true);
                     dispose();
                 }
                 else{
@@ -130,9 +142,6 @@ public class DangNhap extends javax.swing.JFrame {
                     this.resetForm();
                 }
             }
-
-
-
 
         }
 

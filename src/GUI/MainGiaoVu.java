@@ -246,18 +246,38 @@ public class MainGiaoVu extends javax.swing.JFrame {
 
     private void dangXuatActionPerformed(java.awt.event.ActionEvent evt) {
         dispose();
-        DangNhap dangNhap = new DangNhap();
-        dangNhap.setVisible(true);
+//        DangNhap dangNhap = new DangNhap();
+//        dangNhap.setVisible(true);
+        JFrame frame = new DangNhap();
+        frame.setTitle("Đăng Nhập");
+        frame.setResizable(false);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
+
+
     }
 
     private void quanLyMatKhauActionPerformed(java.awt.event.ActionEvent evt) {
-        DoiMatKhau doiMatKhau = new DoiMatKhau();
-        doiMatKhau.show();
+//        DoiMatKhau doiMatKhau = new DoiMatKhau();
+//        doiMatKhau.show();
+        JFrame frame = new DoiMatKhau();
+        frame.setResizable(false);
+        frame.setTitle("Đổi Mật Khẩu");
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
     }
 
     private void thayDoiThongTinActionPerformed(java.awt.event.ActionEvent evt) {
-        ThayDoiThongTin thayDoiThongTin = new ThayDoiThongTin();
-        thayDoiThongTin.show();
+//        ThayDoiThongTin thayDoiThongTin = new ThayDoiThongTin();
+//        thayDoiThongTin.show();
+        JFrame frame = new ThayDoiThongTin();
+        frame.setResizable(false);
+        frame.setTitle("Thay Đổi Thông Tin");
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
     }
 
     private void quanLyGiaoVuActionPerformed(java.awt.event.ActionEvent evt) {
@@ -332,28 +352,25 @@ public class MainGiaoVu extends javax.swing.JFrame {
         ThongTinTaiKhoan thongTinTaiKhoan = new ThongTinTaiKhoan();
         thongTinTaiKhoan.show();
         content.removeAll();
-        content.add("Quản Lý Giáo Vụ", quanLyGiaoVu);
+        content.add("Thông Tin Tài Khoản", thongTinTaiKhoan);
         //thongTinTaiKhoan.ResetForm
     }
 
     private void quanLyGiaoVienActionPerformed(java.awt.event.ActionEvent evt) {
-        FormQuanLyGiaoVien formQuanLyGiaoVien = new FormQuanLyGiaoVien();
-        formQuanLyGiaoVien.show();
+//        FormQuanLyGiaoVien formQuanLyGiaoVien = new FormQuanLyGiaoVien();
+//        formQuanLyGiaoVien.show();
+        JFrame frame = new FormQuanLyGiaoVien();
+        frame.setResizable(false);
+        frame.setTitle("Quản Lý Giáo Viên");
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
     }
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
 
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new MainGiaoVu().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify
     private javax.swing.JTabbedPane content;

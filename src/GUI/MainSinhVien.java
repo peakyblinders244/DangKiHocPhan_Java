@@ -8,6 +8,8 @@ package GUI;
 import service.GiaoVuService;
 import service.SinhVienService;
 
+import javax.swing.*;
+
 /**
  *
  * @author lhqua
@@ -152,39 +154,67 @@ public class MainSinhVien extends javax.swing.JFrame {
         ThongTinTaiKhoan thongTinTaiKhoan = new ThongTinTaiKhoan();
         thongTinTaiKhoan.show();
         content.removeAll();
-        content.add("Quản Lý Giáo Vụ", thongTinTaiKhoan);
+        content.add("Thông Tin Tài Khoản", thongTinTaiKhoan);
         //thongTinTaiKhoan.ResetForm
     }
 
     private void thayDoiThongTinActionPerformed(java.awt.event.ActionEvent evt) {
-        ThayDoiThongTin thayDoiThongTin = new ThayDoiThongTin();
-        thayDoiThongTin.show();
+//        ThayDoiThongTin thayDoiThongTin = new ThayDoiThongTin();
+//        thayDoiThongTin.show();
+        JFrame frame = new ThayDoiThongTin();
+        frame.setResizable(false);
+        frame.setTitle("Đăng Nhập");
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
     }
 
     private void quanLyMatKhauActionPerformed(java.awt.event.ActionEvent evt) {
-        DoiMatKhau doiMatKhau = new DoiMatKhau();
-        doiMatKhau.show();
+//        DoiMatKhau doiMatKhau = new DoiMatKhau();
+//        doiMatKhau.show();
+        JFrame frame = new DoiMatKhau();
+        frame.setResizable(false);
+        frame.setTitle("Đăng Nhập");
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
     }
 
     private void dangXuatActionPerformed(java.awt.event.ActionEvent evt) {
         dispose();
-        DangNhap dangNhap = new DangNhap();
-        dangNhap.setVisible(true);
+//        DangNhap dangNhap = new DangNhap();
+//        dangNhap.setVisible(true);
+        JFrame frame = new DangNhap();
+        frame.setTitle("Đăng Nhập");
+        frame.setResizable(false);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
     }
 
     private void thoatActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
+
         System.exit(0);
     }
 
     private void dangKiHocPhanMouseClicked(java.awt.event.MouseEvent evt) {
-       new FormDangKiHocPhan().setVisible(true);
-
+       //new FormDangKiHocPhan().setVisible(true);
+        JFrame frame = new FormDangKiHocPhan();
+        frame.setResizable(false);
+        frame.setTitle("Đăng Nhập");
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
     }
 
     private void xemLichHocMouseClicked(java.awt.event.MouseEvent evt) {
-        new FormDanhSachHocPhanDaDangKi().setVisible(true);
-
+        //new FormDanhSachHocPhanDaDangKi().setVisible(true);
+        JFrame frame = new FormDanhSachHocPhanDaDangKi();
+        frame.setResizable(false);
+        frame.setTitle("Đăng Nhập");
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
     }
 
     /**
