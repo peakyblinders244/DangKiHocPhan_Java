@@ -283,4 +283,16 @@ public class GiaoVuDAO {
     public int laySoLuongSinhVienTrongHocPhan(Hocphanmo hocphanmo){
         return hocPhanMoDAO.laySoLuongSinhVienTrongHocPhan(hocphanmo);
     }
+
+    public List<Giaovien> layDanhSachGiaoVien(){
+        return giaoVienDAO.layDanhSachGiaoVien();
+    }
+
+    public boolean themGiaoVien(Giaovien giaovien){
+        return giaoVienDAO.themGiaoVien(giaovien);
+    }
+
+    public boolean xoaGiaoVien(Giaovien giaovien){
+        return giaoVienDAO.xoaGiaoVien(giaovien);
+    }
 }

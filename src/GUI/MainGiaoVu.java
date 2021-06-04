@@ -18,10 +18,10 @@ import java.util.List;
  * @author lhqua
  */
 public class MainGiaoVu extends javax.swing.JFrame {
+    private GiaoVuService giaoVuService = new GiaoVuService();
     /**
      * Creates new form MainGiaoVu
      */
-    private GiaoVuService giaoVuService = new GiaoVuService();
     public MainGiaoVu() {
         initComponents();
     }
@@ -50,6 +50,7 @@ public class MainGiaoVu extends javax.swing.JFrame {
         quanLyGiaoVu = new javax.swing.JMenuItem();
         quanLyLopHoc = new javax.swing.JMenuItem();
         quanLyMonHoc = new javax.swing.JMenuItem();
+        quanLyGiaoVien = new javax.swing.JMenuItem();
         quanLySinhVien = new javax.swing.JMenuItem();
         quanLyDaoTao = new javax.swing.JMenu();
         quanLyHocKi = new javax.swing.JMenuItem();
@@ -156,6 +157,14 @@ public class MainGiaoVu extends javax.swing.JFrame {
         });
         quanLyCoBan.add(quanLyMonHoc);
 
+        quanLyGiaoVien.setText("Quản Lý Giáo Viên");
+        quanLyGiaoVien.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                quanLyGiaoVienActionPerformed(evt);
+            }
+        });
+        quanLyCoBan.add(quanLyGiaoVien);
+
         quanLySinhVien.setText("Quản Lý Sinh Viên");
         quanLySinhVien.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -228,7 +237,6 @@ public class MainGiaoVu extends javax.swing.JFrame {
         content.removeAll();
         content.add("Quản Lý Học Kì", quanLyHocKi);
         //quanLyGiaoVu.ResetForm();
-
     }
 
     private void thoatActionPerformed(java.awt.event.ActionEvent evt) {
@@ -305,14 +313,11 @@ public class MainGiaoVu extends javax.swing.JFrame {
     }
 
     private void quanLyHocPhanActionPerformed(java.awt.event.ActionEvent evt) {
-
-
         FormQuanLyHocPhan quanLyHocPhan = new FormQuanLyHocPhan();
         quanLyHocPhan.show();
         content.removeAll();
         content.add("Quản Lý Học Phần", quanLyHocPhan);
         //quanLyGiaoVu.ResetForm();
-
     }
 
     private void timKiemGiaoVuActionPerformed(java.awt.event.ActionEvent evt) {
@@ -327,23 +332,28 @@ public class MainGiaoVu extends javax.swing.JFrame {
         ThongTinTaiKhoan thongTinTaiKhoan = new ThongTinTaiKhoan();
         thongTinTaiKhoan.show();
         content.removeAll();
-        content.add("Thông Tin Tài Khoản", thongTinTaiKhoan);
+        content.add("Quản Lý Giáo Vụ", quanLyGiaoVu);
         //thongTinTaiKhoan.ResetForm
+    }
+
+    private void quanLyGiaoVienActionPerformed(java.awt.event.ActionEvent evt) {
+        FormQuanLyGiaoVien formQuanLyGiaoVien = new FormQuanLyGiaoVien();
+        formQuanLyGiaoVien.show();
     }
 
     /**
      * @param args the command line arguments
      */
-//    public static void main(String args[]) {
-//
-//
-//        /* Create and display the form */
-//        java.awt.EventQueue.invokeLater(new Runnable() {
-//            public void run() {
-//                new MainGiaoVu().setVisible(true);
-//            }
-//        });
-//    }
+    public static void main(String args[]) {
+
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new MainGiaoVu().setVisible(true);
+            }
+        });
+    }
 
     // Variables declaration - do not modify
     private javax.swing.JTabbedPane content;
@@ -353,6 +363,7 @@ public class MainGiaoVu extends javax.swing.JFrame {
     private javax.swing.JMenu quanLyCoBan;
     private javax.swing.JMenuItem quanLyDKHP;
     private javax.swing.JMenu quanLyDaoTao;
+    private javax.swing.JMenuItem quanLyGiaoVien;
     private javax.swing.JMenuItem quanLyGiaoVu;
     private javax.swing.JMenuItem quanLyHocKi;
     private javax.swing.JMenuItem quanLyHocPhan;

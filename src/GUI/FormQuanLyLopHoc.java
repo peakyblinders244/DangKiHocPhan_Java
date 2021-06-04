@@ -23,49 +23,13 @@ import static GUI.DangNhap.kiemTraNguoiDung;
  */
 public class FormQuanLyLopHoc extends javax.swing.JPanel {
     public Lophoc lophocChon = null;
+
     /**
      * Creates new form FormQuanLyLopHoc
      */
     public FormQuanLyLopHoc() {
         initComponents();
-        DefaultTableModel defaultTableModel = new DefaultTableModel();
-        danhSachLopHoc.setModel(defaultTableModel);
-        defaultTableModel.addColumn("Mã Lớp Học");
-        defaultTableModel.addColumn("Tên Lớp Học");
-        defaultTableModel.addColumn("Số Học Sinh Nam");
-        defaultTableModel.addColumn("Số Học Sinh Nữ");
-        defaultTableModel.addColumn("Tổng Số Học Sinh");
-        if(kiemTraNguoiDung == 0) {
-
-            List<Lophoc> listLopHoc = giaoVuService.layDanhSachLopHoc();
-            for (Lophoc i : listLopHoc) {
-                int[] soLuong = giaoVuService.thongTinLop(i.getMaLop());
-                Object[] tmp = new Object[]{i.getMaLop(), i.getTenLop(), soLuong[0], soLuong[1], soLuong[2]};
-                defaultTableModel.addRow(tmp);
-            }
-            ListSelectionModel listSelectionModel = danhSachLopHoc.getSelectionModel();
-            listSelectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-            listSelectionModel.addListSelectionListener(new ListSelectionListener() {
-                @Override
-                public void valueChanged(ListSelectionEvent e) {
-                    int[] dong = danhSachLopHoc.getSelectedRows();
-                    int[] cot = danhSachLopHoc.getSelectedColumns();
-                    String maLop = String.valueOf(danhSachLopHoc.getValueAt(dong[0], 0));
-                    String tenLop = String.valueOf(danhSachLopHoc.getValueAt(dong[0], 1));
-
-                    lophocChon = giaoVuService.layThongTinLopHocBangMaLop(maLop);
-
-                    System.out.println(lophocChon.toString());
-                    if (lophocChon != null) {
-                        layMaLop.setText(lophocChon.getMaLop());
-                        layTenLop.setText(lophocChon.getTenLop());
-                        layMaGVCN.setText(lophocChon.getMaGvcn());
-
-                    }
-                }
-            });
-
-        }
+        capNhatDanhSachLopHoc();
     }
 
     /**
@@ -159,7 +123,7 @@ public class FormQuanLyLopHoc extends javax.swing.JPanel {
         );
 
         danhSachLopHoc.setModel(new javax.swing.table.DefaultTableModel(
-                new Object [][] {
+                new Object[][]{
                         {null, null, null, null, null},
                         {null, null, null, null, null},
                         {null, null, null, null, null},
@@ -171,16 +135,21 @@ public class FormQuanLyLopHoc extends javax.swing.JPanel {
                         {null, null, null, null, null},
                         {null, null, null, null, null}
                 },
-                new String [] {
+                new String[]{
                         "Mã Lớp", "Tên Lớp", "Số Học Sinh Nam", "Sô Học Sinh Nữ", "Tổng Số Học Sinh"
                 }
         ) {
-            Class[] types = new Class [] {
+            Class[] types = new Class[]{
                     java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class
             };
 
             public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
+                return types[columnIndex];
+            }
+        });
+        danhSachLopHoc.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                danhSachLopHocMouseClicked(evt);
             }
         });
         jScrollPane1.setViewportView(danhSachLopHoc);
@@ -285,6 +254,7 @@ public class FormQuanLyLopHoc extends javax.swing.JPanel {
         Lophoc lophocMoi = new Lophoc(maLop,tenLop,maGVCN);
         if(giaoVuService.themLopHocMoi(lophocMoi)){
             JOptionPane.showMessageDialog(this, "Thêm Thành Công ", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            capNhatDanhSachLopHoc();
         }
         else{
             JOptionPane.showMessageDialog(null, "Thêm Lớp Không Thành Công!! Mời Kiểm Tra Lại !!");
@@ -309,6 +279,7 @@ public class FormQuanLyLopHoc extends javax.swing.JPanel {
         }
         if(giaoVuService.xoaLopHoc(maLop)){
             JOptionPane.showMessageDialog(this, "Xóa Thành Công ", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            capNhatDanhSachLopHoc();
         }
         else{
             JOptionPane.showMessageDialog(null, "Xóa Lớp Không Thành Công!! Mời Kiểm Tra Lại !!");
@@ -317,6 +288,7 @@ public class FormQuanLyLopHoc extends javax.swing.JPanel {
     }
 
     private void lamMoiDanhSachActionPerformed(java.awt.event.ActionEvent evt) {
+        capNhatDanhSachLopHoc();
         ResetForm();
     }
 
@@ -324,11 +296,45 @@ public class FormQuanLyLopHoc extends javax.swing.JPanel {
         if(lophocChon != null){
             new DanhSachSinhVienTrongLop(lophocChon).setVisible(true);
         }
-        else{
+        else {
             JOptionPane.showMessageDialog(null, "Chưa Chọn Lớp Học Cần Xem !");
             this.ResetForm();
         }
     }
+
+    private void danhSachLopHocMouseClicked(java.awt.event.MouseEvent evt) {
+        int dong = danhSachLopHoc.getSelectedRow();
+        int[] cot = danhSachLopHoc.getSelectedColumns();
+        String maLop = String.valueOf(danhSachLopHoc.getValueAt(dong, 0));
+        String tenLop = String.valueOf(danhSachLopHoc.getValueAt(dong, 1));
+
+        lophocChon = giaoVuService.layThongTinLopHocBangMaLop(maLop);
+
+        System.out.println(lophocChon.toString());
+        if (lophocChon != null) {
+            layMaLop.setText(lophocChon.getMaLop());
+            layTenLop.setText(lophocChon.getTenLop());
+            layMaGVCN.setText(lophocChon.getMaGvcn());
+
+        }
+    }
+
+    private void capNhatDanhSachLopHoc(){
+        DefaultTableModel defaultTableModel = new DefaultTableModel();
+        danhSachLopHoc.setModel(defaultTableModel);
+        defaultTableModel.addColumn("Mã Lớp Học");
+        defaultTableModel.addColumn("Tên Lớp Học");
+        defaultTableModel.addColumn("Số Học Sinh Nam");
+        defaultTableModel.addColumn("Số Học Sinh Nữ");
+        defaultTableModel.addColumn("Tổng Số Học Sinh");
+        List<Lophoc> listLopHoc = giaoVuService.layDanhSachLopHoc();
+        for (Lophoc i : listLopHoc) {
+            int[] soLuong = giaoVuService.thongTinLop(i.getMaLop());
+            Object[] tmp = new Object[]{i.getMaLop(), i.getTenLop(), soLuong[0], soLuong[1], soLuong[2]};
+            defaultTableModel.addRow(tmp);
+        }
+    }
+
     public void ResetForm() {
         layMaLop.setText("");
         layTenLop.setText("");
@@ -353,5 +359,5 @@ public class FormQuanLyLopHoc extends javax.swing.JPanel {
     private javax.swing.JLabel tieuDeLopHoc;
     private javax.swing.JButton xemThongTinLop;
     private javax.swing.JButton xoaLopHoc;
-    // End of variables declaration
+// End of variables declaration
 }

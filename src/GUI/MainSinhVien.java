@@ -183,7 +183,7 @@ public class MainSinhVien extends javax.swing.JFrame {
     }
 
     private void xemLichHocMouseClicked(java.awt.event.MouseEvent evt) {
-        // TODO add your handling code here:
+        new FormDanhSachHocPhanDaDangKi().setVisible(true);
 
     }
 

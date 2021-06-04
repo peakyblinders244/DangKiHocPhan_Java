@@ -8,15 +8,11 @@ package GUI;
 import model.*;
 
 import javax.swing.*;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
-
 import java.util.List;
 import java.util.Set;
 
 import static GUI.DangNhap.giaoVuService;
-import static GUI.DangNhap.kiemTraNguoiDung;
 
 /**
  *
@@ -39,64 +35,7 @@ public class FormQuanLyHocPhan extends javax.swing.JPanel {
         }
         thoigiandkhp = giaoVuService.layThongtinThoiGianDKHPHienTai(hockiSet.getTenHocKi(),hockiSet.getNamHoc());
         initComponents();
-        DefaultTableModel defaultTableModel = new DefaultTableModel();
-        danhSachHocPhan.setModel(defaultTableModel);
-        defaultTableModel.addColumn("Mã Môn Học");
-        defaultTableModel.addColumn("Mã Giáo Viên Lý Thuyết");
-        defaultTableModel.addColumn("Tên Học Phần");
-        defaultTableModel.addColumn("Phòng Học");
-        defaultTableModel.addColumn("Thứ");
-        defaultTableModel.addColumn("Ca");
-        defaultTableModel.addColumn("Số Lượng");
-        defaultTableModel.addColumn("Số Tín Chỉ");
-
-        if(kiemTraNguoiDung == 0) {
-            if(thoigiandkhp != null) {
-                List<Hocphanmo> hocphanmoList = giaoVuService.layDanhSachHocPhanMoTrongHocKi(thoigiandkhp.getHocki().getTenHocKi(), thoigiandkhp.getHocki().getNamHoc());
-
-                for (Hocphanmo i : hocphanmoList) {
-
-                    Object[] tmp = new Object[]{i.getMonhoc().getMaMonHoc(), i.getMaGvlt(), i.getTenHocPhan(), i.getTenPhongHoc(), i.getThu(), i.getCa(), i.getSoLuong(), i.getMonhoc().getSoTinChi()};
-                    defaultTableModel.addRow(tmp);
-                }
-            }
-            ListSelectionModel listSelectionModel = danhSachHocPhan.getSelectionModel();
-            listSelectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-            listSelectionModel.addListSelectionListener(new ListSelectionListener() {
-                @Override
-                public void valueChanged(ListSelectionEvent e) {
-                    int[] dong = danhSachHocPhan.getSelectedRows();
-                    int[] cot = danhSachHocPhan.getSelectedColumns();
-                    String maMonHoc = String.valueOf(danhSachHocPhan.getValueAt(dong[0], 0));
-                    String maGVLT=  String.valueOf(danhSachHocPhan.getValueAt(dong[0], 1));
-                    String tenHocPhan = String.valueOf(danhSachHocPhan.getValueAt(dong[0], 2));
-                    String tenPhongHoc = String.valueOf(danhSachHocPhan.getValueAt(dong[0], 3));
-                    String thu = String.valueOf(danhSachHocPhan.getValueAt(dong[0], 4));
-                    String ca =  String.valueOf(danhSachHocPhan.getValueAt(dong[0], 5));
-                    String soLuong = String.valueOf(danhSachHocPhan.getValueAt(dong[0], 6));
-                    String soTinChi = String.valueOf(danhSachHocPhan.getValueAt(dong[0], 7));
-
-                    layMaMonHoc.setText(maMonHoc);
-                    layMaGVLT.setText(maGVLT);
-                    layTenHocPhan.setText(tenHocPhan);
-                    layPhongHoc.setText(tenPhongHoc);
-                    layThu.setText(thu);
-                    layCa.setText(ca);
-                    laySoLuong.setText(soLuong);
-                    laySoTinChi.setText(soTinChi);
-                    List<Hocphanmo> hocphanmos = giaoVuService.layDanhSachHocPhanMoTrongHocKi(thoigiandkhp.getHocki().getTenHocKi(),thoigiandkhp.getHocki().getNamHoc());
-                    System.out.println(thoigiandkhp.toString());
-                    for (Hocphanmo i: hocphanmos) {
-                        if(i.getMaGvlt().equals(maGVLT) && i.getCa().toString().equals(ca) && i.getTenHocPhan().equals(tenHocPhan)){
-                            hocphanmoChon = i;
-                        }
-                        System.out.println(i.toString());
-                    }
-                    System.out.println(hocphanmoChon.toString());
-                }
-            });
-        }
-
+        capNhatDanhSach();
     }
 
     /**
@@ -173,6 +112,11 @@ public class FormQuanLyHocPhan extends javax.swing.JPanel {
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
+            }
+        });
+        danhSachHocPhan.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                danhSachHocPhanMouseClicked(evt);
             }
         });
         test.setViewportView(danhSachHocPhan);
@@ -411,6 +355,7 @@ public class FormQuanLyHocPhan extends javax.swing.JPanel {
 
         if (giaoVuService.xoaHocPhanTrongKi(hocphanmo)) {
             JOptionPane.showMessageDialog(null, "Xóa Thành Công!");
+            capNhatDanhSach();
         } else {
             JOptionPane.showMessageDialog(null, "Xóa Thất Bại!! Mời Kiểm Tra Lại");
         }
@@ -463,10 +408,11 @@ public class FormQuanLyHocPhan extends javax.swing.JPanel {
                 this.ResetForm();
                 return;
             }
-            //Hocphanmo(String maGvlt, String tenHocPhan, String tenPhongHoc, String thu, Integer ca, Integer soLuong, Thoigiandkhp thoigiandkhp, Monhoc monhoc)
+
             Hocphanmo hocphanmoNew = new Hocphanmo(maGVLT, tenHocPhan, phongHoc, thu, ca, soLuong, thoigiandkhp, monhoc);
             if (giaoVuService.themHocPhanTrongKi(hocphanmoNew)) {
                 JOptionPane.showMessageDialog(null, "Thêm Thành Công!");
+                capNhatDanhSach();
             } else {
                 JOptionPane.showMessageDialog(null, "Thêm Thất Bại!! Mời Kiểm Tra Lại");
             }
@@ -478,8 +424,61 @@ public class FormQuanLyHocPhan extends javax.swing.JPanel {
     }
 
     private void lamMoiActionPerformed(java.awt.event.ActionEvent evt) {
+        capNhatDanhSach();
         ResetForm();
     }
+
+    private void danhSachHocPhanMouseClicked(java.awt.event.MouseEvent evt) {
+        int dong = danhSachHocPhan.getSelectedRow();
+        int[] cot = danhSachHocPhan.getSelectedColumns();
+        String maMonHoc = String.valueOf(danhSachHocPhan.getValueAt(dong, 0));
+        String maGVLT=  String.valueOf(danhSachHocPhan.getValueAt(dong, 1));
+        String tenHocPhan = String.valueOf(danhSachHocPhan.getValueAt(dong, 2));
+        String tenPhongHoc = String.valueOf(danhSachHocPhan.getValueAt(dong, 3));
+        String thu = String.valueOf(danhSachHocPhan.getValueAt(dong, 4));
+        String ca =  String.valueOf(danhSachHocPhan.getValueAt(dong, 5));
+        String soLuong = String.valueOf(danhSachHocPhan.getValueAt(dong, 6));
+        String soTinChi = String.valueOf(danhSachHocPhan.getValueAt(dong, 7));
+
+        layMaMonHoc.setText(maMonHoc);
+        layMaGVLT.setText(maGVLT);
+        layTenHocPhan.setText(tenHocPhan);
+        layPhongHoc.setText(tenPhongHoc);
+        layThu.setText(thu);
+        layCa.setText(ca);
+        laySoLuong.setText(soLuong);
+        laySoTinChi.setText(soTinChi);
+        List<Hocphanmo> hocphanmos = giaoVuService.layDanhSachHocPhanMoTrongHocKi(thoigiandkhp.getHocki().getTenHocKi(),thoigiandkhp.getHocki().getNamHoc());
+        for (Hocphanmo i: hocphanmos) {
+            if(i.getMaGvlt().equals(maGVLT) && i.getCa().toString().equals(ca) && i.getTenHocPhan().equals(tenHocPhan)){
+                hocphanmoChon = i;
+            }
+        }
+
+    }
+
+    private void capNhatDanhSach() {
+        DefaultTableModel defaultTableModel = new DefaultTableModel();
+        danhSachHocPhan.setModel(defaultTableModel);
+        defaultTableModel.addColumn("Mã Môn Học");
+        defaultTableModel.addColumn("Mã Giáo Viên Lý Thuyết");
+        defaultTableModel.addColumn("Tên Học Phần");
+        defaultTableModel.addColumn("Phòng Học");
+        defaultTableModel.addColumn("Thứ");
+        defaultTableModel.addColumn("Ca");
+        defaultTableModel.addColumn("Số Lượng");
+        defaultTableModel.addColumn("Số Tín Chỉ");
+        if (thoigiandkhp != null) {
+            List<Hocphanmo> hocphanmoList = giaoVuService.layDanhSachHocPhanMoTrongHocKi(thoigiandkhp.getHocki().getTenHocKi(), thoigiandkhp.getHocki().getNamHoc());
+
+            for (Hocphanmo i : hocphanmoList) {
+
+                Object[] tmp = new Object[]{i.getMonhoc().getMaMonHoc(), i.getMaGvlt(), i.getTenHocPhan(), i.getTenPhongHoc(), i.getThu(), i.getCa(), i.getSoLuong(), i.getMonhoc().getSoTinChi()};
+                defaultTableModel.addRow(tmp);
+            }
+        }
+    }
+
     public void ResetForm() {
         layMaMonHoc.setText("");
         layMaGVLT.setText("");
@@ -490,6 +489,7 @@ public class FormQuanLyHocPhan extends javax.swing.JPanel {
         laySoLuong.setText("");
         laySoTinChi.setText("");
     }
+
 
     // Variables declaration - do not modify
     private javax.swing.JLabel ca;

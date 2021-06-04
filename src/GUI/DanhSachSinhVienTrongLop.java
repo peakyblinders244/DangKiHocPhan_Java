@@ -28,51 +28,9 @@ public class DanhSachSinhVienTrongLop extends javax.swing.JFrame {
      * Creates new form DanhSachSinhVienTrongLop
      */
     public DanhSachSinhVienTrongLop(Lophoc lophocChon) {
-        initComponents();
         lophoc = lophocChon;
-        DefaultTableModel defaultTableModel = new DefaultTableModel();
-        danhSachSinhVien.setModel(defaultTableModel);
-        defaultTableModel.addColumn("Mã Sinh Viên");
-        defaultTableModel.addColumn("Tên Sinh Viên");
-        defaultTableModel.addColumn("Giới Tính");
-        defaultTableModel.addColumn("Ngày Sinh");
-        defaultTableModel.addColumn("Địa Chỉ");
-        if(lophocChon != null){
-            Set<Sinhvien> sinhviens = lophocChon.getSinhviens();
-            for (Sinhvien i: sinhviens) {
-                Object[] tmp = new Object[]{i.getMaSinhVien(),i.getTenSinhVien(),i.getGioiTinh(),i.getNgaySinh(),i.getDiaChi()};
-                defaultTableModel.addRow(tmp);
-            }
-            ListSelectionModel listSelectionModel = danhSachSinhVien.getSelectionModel();
-            listSelectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-            listSelectionModel.addListSelectionListener(new ListSelectionListener() {
-                @Override
-                public void valueChanged(ListSelectionEvent e) {
-                    int[] dong = danhSachSinhVien.getSelectedRows();
-                    int[] cot = danhSachSinhVien.getSelectedColumns();
-                    String maSinhVien = String.valueOf(danhSachSinhVien.getValueAt(dong[0], 0));
-                    String tenSinhVien = String.valueOf(danhSachSinhVien.getValueAt(dong[0], 1));
-                    String gioiTinh = String.valueOf(danhSachSinhVien.getValueAt(dong[0], 2));
-                    String ngaySinh = String.valueOf(danhSachSinhVien.getValueAt(dong[0], 3));
-                    String diaChi = String.valueOf(danhSachSinhVien.getValueAt(dong[0], 4));
-                    Date date = Date.valueOf(ngaySinh);
-                    sinhvienChon = giaoVuService.laySinhVienBangMaSinhVien(maSinhVien);
-
-                    System.out.println(sinhvienChon.toString());
-                    if (sinhvienChon != null) {
-                        layMaSinhVien.setText(sinhvienChon.getMaSinhVien());
-                        layTenSinhVien.setText(sinhvienChon.getTenSinhVien());
-                        layNgaySinh.setText(sinhvienChon.getNgaySinh().toString());
-                        layDiaChi.setText(sinhvienChon.getDiaChi());
-                        if (sinhvienChon.getGioiTinh().equals("Nam")) {
-                            layGioiTinh.setSelectedIndex(0);
-                        } else {
-                            layGioiTinh.setSelectedIndex(1);
-                        }
-                    }
-                }
-            });
-        }
+        initComponents();
+        capNhatDanhSachSinhVien();
     }
 
     /**
@@ -149,6 +107,11 @@ public class DanhSachSinhVienTrongLop extends javax.swing.JFrame {
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
+            }
+        });
+        danhSachSinhVien.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                danhSachSinhVienMouseClicked(evt);
             }
         });
         jScrollPane1.setViewportView(danhSachSinhVien);
@@ -368,18 +331,17 @@ public class DanhSachSinhVienTrongLop extends javax.swing.JFrame {
             sinhvienChon.setDiaChi(diaChi);
             if (giaoVuService.capNhatSinhVien(sinhvienChon)) {
                 JOptionPane.showMessageDialog(this, "Sửa Thành Công ", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                capNhatDanhSachSinhVien();
             } else {
                 JOptionPane.showMessageDialog(null, "Lỗi Không Sửa Được Mời Kiểm Tra Lại Dữ Liệu !");
                 this.ResetForm();
             }
         }
         else{
-            JOptionPane.showMessageDialog(null, "Chưa Chọn Giáo Vụ !");
+            JOptionPane.showMessageDialog(null, "Chưa Chọn Sinh Viên !");
             this.ResetForm();
         }
     }
-
-
 
     private void themSinhVienActionPerformed(java.awt.event.ActionEvent evt) {
         String strNull = "";
@@ -402,6 +364,7 @@ public class DanhSachSinhVienTrongLop extends javax.swing.JFrame {
         Sinhvien sinhvienMoi = new Sinhvien(maSinhVien,tenSinhVien,gioiTinh,date,diaChi,maSinhVien,maSinhVien,lophoc);
         if(giaoVuService.themSinhVienVaoLop(sinhvienMoi)){
             JOptionPane.showMessageDialog(this, "Thêm Thành Công ", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            capNhatDanhSachSinhVien();
         }
         else{
             JOptionPane.showMessageDialog(null, "Lỗi Không Thêm Được Mời Kiểm Tra Lại Dữ Liệu !");
@@ -410,6 +373,7 @@ public class DanhSachSinhVienTrongLop extends javax.swing.JFrame {
     }
 
     private void lamMoiDanhSachActionPerformed(java.awt.event.ActionEvent evt) {
+        capNhatDanhSachSinhVien();
         ResetForm();
     }
 
@@ -420,6 +384,7 @@ public class DanhSachSinhVienTrongLop extends javax.swing.JFrame {
             if(giaoVuService.capNhatSinhVien(sinhvienChon))
             {
                 JOptionPane.showMessageDialog(this, "Reset Thành Công! Tài Khoản và Mật Khẩu là Mã Sinh Viên ", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                capNhatDanhSachSinhVien();
             }
             else{
                 JOptionPane.showMessageDialog(null, "Reset Không Thành Công!! Mời Làm Lại");
@@ -434,7 +399,7 @@ public class DanhSachSinhVienTrongLop extends javax.swing.JFrame {
 
     private void xoaSinhVienActionPerformed(java.awt.event.ActionEvent evt) {
         if(sinhvienChon == null){
-            JOptionPane.showMessageDialog(null, "Bạn Chưa Chọn Sinh ViênCần Xóa!");
+            JOptionPane.showMessageDialog(null, "Bạn Chưa Chọn Sinh Viên Cần Xóa!");
             this.ResetForm();
         }
         else {
@@ -456,6 +421,7 @@ public class DanhSachSinhVienTrongLop extends javax.swing.JFrame {
             Sinhvien sinhvienXoa = giaoVuService.laySinhVienBangMaSinhVien(maSinhVien);
             if(giaoVuService.xoaSinhVien(sinhvienXoa)){
                 JOptionPane.showMessageDialog(this, "Xóa  Thành Công ", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                capNhatDanhSachSinhVien();
             }
             else{
                 JOptionPane.showMessageDialog(null, "Xóa Không Thành Công!! Mời Kiểm Tra Lại Dữ Liệu");
@@ -468,6 +434,49 @@ public class DanhSachSinhVienTrongLop extends javax.swing.JFrame {
         dispose();
     }
 
+    private void danhSachSinhVienMouseClicked(java.awt.event.MouseEvent evt) {
+        int dong = danhSachSinhVien.getSelectedRow();
+        int[] cot = danhSachSinhVien.getSelectedColumns();
+        String maSinhVien = String.valueOf(danhSachSinhVien.getValueAt(dong, 0));
+        String tenSinhVien = String.valueOf(danhSachSinhVien.getValueAt(dong, 1));
+        String gioiTinh = String.valueOf(danhSachSinhVien.getValueAt(dong, 2));
+        String ngaySinh = String.valueOf(danhSachSinhVien.getValueAt(dong, 3));
+        String diaChi = String.valueOf(danhSachSinhVien.getValueAt(dong, 4));
+        Date date = Date.valueOf(ngaySinh);
+        sinhvienChon = giaoVuService.laySinhVienBangMaSinhVien(maSinhVien);
+
+        System.out.println(sinhvienChon.toString());
+        if (sinhvienChon != null) {
+            layMaSinhVien.setText(sinhvienChon.getMaSinhVien());
+            layTenSinhVien.setText(sinhvienChon.getTenSinhVien());
+            layNgaySinh.setText(sinhvienChon.getNgaySinh().toString());
+            layDiaChi.setText(sinhvienChon.getDiaChi());
+            if (sinhvienChon.getGioiTinh().equals("Nam")) {
+                layGioiTinh.setSelectedIndex(0);
+            } else {
+                layGioiTinh.setSelectedIndex(1);
+            }
+        }
+    }
+
+   private void capNhatDanhSachSinhVien(){
+       DefaultTableModel defaultTableModel = new DefaultTableModel();
+       danhSachSinhVien.setModel(defaultTableModel);
+       defaultTableModel.addColumn("Mã Sinh Viên");
+       defaultTableModel.addColumn("Tên Sinh Viên");
+       defaultTableModel.addColumn("Giới Tính");
+       defaultTableModel.addColumn("Ngày Sinh");
+       defaultTableModel.addColumn("Địa Chỉ");
+       if(lophoc != null) {
+           Lophoc lophocChon = giaoVuService.layThongTinLopHocBangMaLop(lophoc.getMaLop());
+           Set<Sinhvien> sinhviens = lophocChon.getSinhviens();
+           for (Sinhvien i : sinhviens) {
+               Object[] tmp = new Object[]{i.getMaSinhVien(), i.getTenSinhVien(), i.getGioiTinh(), i.getNgaySinh(), i.getDiaChi()};
+               defaultTableModel.addRow(tmp);
+           }
+       }
+   }
+
     public void ResetForm() {
         layMaSinhVien.setText("");
         layTenSinhVien.setText("");
@@ -476,40 +485,6 @@ public class DanhSachSinhVienTrongLop extends javax.swing.JFrame {
         layGioiTinh.setSelectedIndex(0);
         sinhvienChon = null;
     }
-    /**
-     * @param args the command line arguments
-     */
-//    public static void main(String args[]) {
-//        /* Set the Nimbus look and feel */
-//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
-//         */
-//        try {
-//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-//                if ("Nimbus".equals(info.getName())) {
-//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-//                    break;
-//                }
-//            }
-//        } catch (ClassNotFoundException ex) {
-//            java.util.logging.Logger.getLogger(DanhSachSinhVienTrongLop.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (InstantiationException ex) {
-//            java.util.logging.Logger.getLogger(DanhSachSinhVienTrongLop.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (IllegalAccessException ex) {
-//            java.util.logging.Logger.getLogger(DanhSachSinhVienTrongLop.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-//            java.util.logging.Logger.getLogger(DanhSachSinhVienTrongLop.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        }
-//        //</editor-fold>
-//
-//        /* Create and display the form */
-//        java.awt.EventQueue.invokeLater(new Runnable() {
-//            public void run() {
-//                new DanhSachSinhVienTrongLop().setVisible(true);
-//            }
-//        });
-//    }
 
     // Variables declaration - do not modify
     private javax.swing.JButton capNhatSinhVien;

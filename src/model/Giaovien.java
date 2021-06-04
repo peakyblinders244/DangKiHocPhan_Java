@@ -12,6 +12,19 @@ public class Giaovien {
     private String diaChi;
     private Monhoc monHoc;
 
+    public Giaovien(String maGiaoVien, String tenGiaoVien, String gioiTinh, Date ngaySinh, String diaChi, Monhoc monHoc) {
+        this.maGiaoVien = maGiaoVien;
+        this.tenGiaoVien = tenGiaoVien;
+        this.gioiTinh = gioiTinh;
+        this.ngaySinh = ngaySinh;
+        this.diaChi = diaChi;
+        this.monHoc = monHoc;
+    }
+
+    public Giaovien() {
+
+    }
+
     public int getId() {
         return id;
     }

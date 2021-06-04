@@ -24,7 +24,7 @@
             <column name="diaChi" sql-type="varchar(50)" length="50" not-null="true"/>
         </property>
 
-        <many-to-one name="monHoc" class="model.Monhoc" fetch="join" lazy="false" cascade="save-update,delete">
+        <many-to-one name="monHoc" class="model.Monhoc" fetch="join" lazy="false" cascade="save-update">
             <column name="idMonHoc" not-null="true"/>
         </many-to-one>
     </class>

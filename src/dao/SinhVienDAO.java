@@ -246,4 +246,8 @@ public class SinhVienDAO {
     public boolean themSinhVienVaoHocPhan(Sinhvien_Hocphan sinhvien_hocphan){
         return sinhvien_hocphanDAO.themSinhVienVaoHocPhan(sinhvien_hocphan);
     }
+
+    public boolean xoaSinhVienTrongHocPhan(Sinhvien_Hocphan sinhvien_hocphan){
+        return sinhvien_hocphanDAO.xoaSinhVienTrongHocPhan(sinhvien_hocphan);
+    }
 }

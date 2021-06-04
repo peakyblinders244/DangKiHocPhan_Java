@@ -1,31 +1,24 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package GUI;
 
 import model.*;
 
 import javax.swing.*;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import static GUI.DangNhap.*;
 
-/**
- *
- * @author lhqua
- */
-public class FormDangKiHocPhan extends javax.swing.JFrame {
+public class FormDangKiHocPhan extends javax.swing.JFrame{
     private Hocki hockiHienTai = null;
     private Thoigiandkhp thoigiandkhpHienTai = null;
     private Sinhvien_Hocphan sinhvien_hocphanDangKi = null;
+    private Set<Hocphanmo> danhSachDangKi = new HashSet<Hocphanmo>(0);
+    private List<Hocphanmo> danhSachMoLop = null;
+    private Date GioHienTai = null;
     /**
      * Creates new form FormDangKiHocPhan
      */
@@ -35,81 +28,15 @@ public class FormDangKiHocPhan extends javax.swing.JFrame {
         for (Hocki i: hockiList) {
             if(i.getSetHientai().equals(1)){
                 hockiHienTai = i;
+                break;
             }
         }
         Thoigiandkhp thoigiandkhp = giaoVuService.layThongtinThoiGianDKHPHienTai(hockiHienTai.getTenHocKi(),hockiHienTai.getNamHoc());
         thoigiandkhpHienTai = thoigiandkhp;
-        long millis = System.currentTimeMillis();
-        Date ngayHienTai = new Date(millis);
-        Date ngayBatDau = thoigiandkhp.getNgayBatDau();
-        Date ngayKetThuc = thoigiandkhp.getNgayKetThuc();
-        if(ngayHienTai.after(ngayBatDau) && ngayHienTai.before(ngayKetThuc)) {
-//        if(true) {
-            DefaultTableModel defaultTableModel = new DefaultTableModel();
-            danhSachHocPhan.setModel(defaultTableModel);
-            defaultTableModel.addColumn("Mã Môn Học");
-            defaultTableModel.addColumn("Tên Học Phần");
-            defaultTableModel.addColumn("Tên Phòng Học");
-            defaultTableModel.addColumn("Thứ");
-            defaultTableModel.addColumn("Ca");
-            defaultTableModel.addColumn("Số Lượng");
-            Sinhvien sinhvienSuDung = giaoVuService.laySinhVienBangMaSinhVien(sinhvien.getMaSinhVien());
-            Set<Sinhvien_Hocphan> sinhvien_hocphans = sinhvienSuDung.getSinhvien_hocphans();
+        danhSachMoLop = giaoVuService.layDanhSachHocPhanMoTrongHocKi(hockiHienTai.getTenHocKi(),hockiHienTai.getNamHoc());
+        capNhatBangDanhSachHocPhan();
 
-            List<Monhoc> danhSachMonHocSinhVienDaDangKi = new ArrayList<Monhoc>(0);
-            for (Sinhvien_Hocphan i : sinhvien_hocphans) {
-                danhSachMonHocSinhVienDaDangKi.add(i.getHocphanmo().getMonhoc());
-
-            }
-            List<Hocphanmo> hocphanmoList = giaoVuService.layDanhSachHocPhanMoTrongHocKi(hockiHienTai.getTenHocKi(), hockiHienTai.getNamHoc());
-            for (Hocphanmo i : hocphanmoList) {
-                boolean flag = true;
-                for (Monhoc j : danhSachMonHocSinhVienDaDangKi) {
-                    if(i.getMonhoc().getMaMonHoc().equals(j.getMaMonHoc())){
-                        flag = false;
-                    }
-                }
-                if(flag == true){
-                    int soLuongHienTai = giaoVuService.laySoLuongSinhVienTrongHocPhan(i);
-                    Object[] tmp = new Object[]{i.getMonhoc().getMaMonHoc(),i.getTenHocPhan(),i.getTenPhongHoc(),i.getThu(),i.getCa().toString(),soLuongHienTai + "/" + i.getSoLuong()};
-                    defaultTableModel.addRow(tmp);
-                }
-            }
-            ListSelectionModel listSelectionModel = danhSachHocPhan.getSelectionModel();
-            listSelectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-            listSelectionModel.addListSelectionListener(new ListSelectionListener() {
-                @Override
-                public void valueChanged(ListSelectionEvent e) {
-                    int[] dong = danhSachHocPhan.getSelectedRows();
-                    int[] cot = danhSachHocPhan.getSelectedColumns();
-                    String maMonHoc = String.valueOf(danhSachHocPhan.getValueAt(dong[0], 0));
-                    String tenHocPhan=  String.valueOf(danhSachHocPhan.getValueAt(dong[0], 1));
-                    String tenPhongHoc = String.valueOf(danhSachHocPhan.getValueAt(dong[0], 2));
-                    String thu = String.valueOf(danhSachHocPhan.getValueAt(dong[0], 3));
-                    String strCa = String.valueOf(danhSachHocPhan.getValueAt(dong[0], 4));
-                    String strSoLuong =  String.valueOf(danhSachHocPhan.getValueAt(dong[0], 5));
-
-                    layMaMonHocChon.setText(maMonHoc);
-                    layTenHocPhanChon.setText(tenHocPhan);
-                    Sinhvien sinhvien = sinhvienSuDung;
-                    Hocphanmo hocphanmo = null;
-                    for (Hocphanmo i : hocphanmoList) {
-                        if(i.getMonhoc().getMaMonHoc().equals(maMonHoc)){
-                            hocphanmo = i;
-
-                            break;
-                        }
-                    }
-
-                    Sinhvien_Hocphan sinhvien_hocphan = new Sinhvien_Hocphan(sinhvien,ngayHienTai,hocphanmo);
-                    sinhvien_hocphanDangKi = sinhvien_hocphan;
-                }
-            });
-
-        }
-        else{
-            JOptionPane.showMessageDialog(null, "Hiện Nay Không Mở Kì Đăng Kí Học Phần !!");
-        }
+        capNhatBangDangKiHocPhan();
     }
 
     /**
@@ -129,11 +56,12 @@ public class FormDangKiHocPhan extends javax.swing.JFrame {
         danhSachHocPhan = new javax.swing.JTable();
         jPanel3 = new javax.swing.JPanel();
         dangKi = new javax.swing.JButton();
-        maMonHocChon = new javax.swing.JLabel();
-        tenHocPhanChon = new javax.swing.JLabel();
-        layMaMonHocChon = new javax.swing.JTextField();
-        layTenHocPhanChon = new javax.swing.JTextField();
-        lamMoi = new javax.swing.JButton();
+        huyDangKi = new javax.swing.JButton();
+        jPanel4 = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        danhSachMonDangKi = new javax.swing.JTable();
+        jPanel5 = new javax.swing.JPanel();
+        tieuDeDanhSachMonDangKi = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -187,6 +115,11 @@ public class FormDangKiHocPhan extends javax.swing.JFrame {
                 return types [columnIndex];
             }
         });
+        danhSachHocPhan.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                danhSachHocPhanMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(danhSachHocPhan);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -207,50 +140,96 @@ public class FormDangKiHocPhan extends javax.swing.JFrame {
             }
         });
 
-        maMonHocChon.setText("Mã Môn Học ");
-
-        tenHocPhanChon.setText("Tên Học Phần");
-
-        lamMoi.setText("Làm Mới");
-        lamMoi.addActionListener(new java.awt.event.ActionListener() {
+        huyDangKi.setText("Hủy Đăng Kí");
+        huyDangKi.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                lamMoiActionPerformed(evt);
+                huyDangKiActionPerformed(evt);
             }
         });
+
+        danhSachMonDangKi.setModel(new javax.swing.table.DefaultTableModel(
+                new Object [][] {
+                        {null, null, null, null, null, null},
+                        {null, null, null, null, null, null},
+                        {null, null, null, null, null, null},
+                        {null, null, null, null, null, null}
+                },
+                new String [] {
+                        "Mã Môn Học", "Tên Học Phần", "Tên Phòng Học", "Thứ", "Ca", "Số Lượng"
+                }
+        ) {
+            Class[] types = new Class [] {
+                    java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        danhSachMonDangKi.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                danhSachMonDangKiMouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(danhSachMonDangKi);
+
+        tieuDeDanhSachMonDangKi.setText("Danh Sách Môn Đăng Kí");
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+                jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel5Layout.createSequentialGroup()
+                                .addGap(300, 300, 300)
+                                .addComponent(tieuDeDanhSachMonDangKi, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel5Layout.setVerticalGroup(
+                jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(tieuDeDanhSachMonDangKi)
+                                .addContainerGap())
+        );
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+                jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jScrollPane2)
+                        .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        jPanel4Layout.setVerticalGroup(
+                jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
                 jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addGap(29, 29, 29)
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(maMonHocChon)
-                                        .addComponent(tenHocPhanChon))
-                                .addGap(53, 53, 53)
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(layMaMonHocChon, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(layTenHocPhanChon, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(18, 18, 18)
                                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                         .addComponent(dangKi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(lamMoi, javax.swing.GroupLayout.DEFAULT_SIZE, 93, Short.MAX_VALUE))
+                                        .addComponent(huyDangKi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addGap(126, 126, 126))
         );
         jPanel3Layout.setVerticalGroup(
                 jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addGap(22, 22, 22)
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(dangKi)
-                                        .addComponent(maMonHocChon)
-                                        .addComponent(layMaMonHocChon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(dangKi)
                                 .addGap(18, 18, 18)
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(tenHocPhanChon)
-                                        .addComponent(layTenHocPhanChon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(lamMoi))
-                                .addContainerGap(23, Short.MAX_VALUE))
+                                .addComponent(huyDangKi)
+                                .addContainerGap(152, Short.MAX_VALUE))
+                        .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -280,37 +259,185 @@ public class FormDangKiHocPhan extends javax.swing.JFrame {
     }
 
     private void dangKiActionPerformed(java.awt.event.ActionEvent evt) {
-        if(sinhvien_hocphanDangKi != null) {
-            if (sinhVienService.themSinhVienVaoHocPhan(sinhvien_hocphanDangKi)) {
-                JOptionPane.showMessageDialog(null, "Đăng Kí Thành Công !!");
-            } else {
-                JOptionPane.showMessageDialog(null, "Đăng Kí Thất Bại Mời Kiểm Tra Lại !!");
-            }
+        if(danhSachDangKi.size() > 8){
+            JOptionPane.showMessageDialog(null, "Không Được Đăng Kí Quá 8 Môn!! Mời Đăng Kí Lại!!");
+            danhSachDangKi.clear();
+            capNhatBangDangKiHocPhan();
         }
         else{
-            JOptionPane.showMessageDialog(null, "Bạn Chưa Chọn Lớp Đăng Kí !!");
+            Sinhvien sinhvienDangKi = sinhvien;
+            boolean flag = true;
+            for (Hocphanmo i : danhSachDangKi) {
+                Sinhvien_Hocphan sinhvien_hocphan = new Sinhvien_Hocphan(sinhvienDangKi,GioHienTai,i);
+                if(!sinhVienService.themSinhVienVaoHocPhan(sinhvien_hocphan)){
+                    flag = false;
+
+                }
+            }
+            if(flag == true){
+                JOptionPane.showMessageDialog(null, "Đăng Kí Thành Công !!");
+                danhSachDangKi.clear();
+                capNhatBangDangKiHocPhan();
+            }
+            else {
+                JOptionPane.showMessageDialog(null, "Đăng Kí Không Thành Công!! Mời Kiểm Tra Lại!!");
+            }
         }
     }
 
-    private void lamMoiActionPerformed(java.awt.event.ActionEvent evt) {
-        new FormDangKiHocPhan().setVisible(true);
-        dispose();
+    private void huyDangKiActionPerformed(java.awt.event.ActionEvent evt) {
+        danhSachDangKi.clear();
+        capNhatBangDangKiHocPhan();
     }
+
+    private void danhSachHocPhanMouseClicked(java.awt.event.MouseEvent evt) {
+        int dong = danhSachHocPhan.getSelectedRow();
+        int[] cot = danhSachHocPhan.getSelectedColumns();
+        String maMonHoc = String.valueOf(danhSachHocPhan.getValueAt(dong, 0));
+        String tenHocPhan=  String.valueOf(danhSachHocPhan.getValueAt(dong, 1));
+        String tenPhongHoc = String.valueOf(danhSachHocPhan.getValueAt(dong, 2));
+        String thu = String.valueOf(danhSachHocPhan.getValueAt(dong, 3));
+        String strCa = String.valueOf(danhSachHocPhan.getValueAt(dong, 4));
+        String strSoLuong =  String.valueOf(danhSachHocPhan.getValueAt(dong, 5));
+
+        Sinhvien sinhvienDangKi = sinhvien;
+        Hocphanmo hocphanmo = null;
+        for (Hocphanmo i : danhSachMoLop) {
+            if(i.getMonhoc().getMaMonHoc().equals(maMonHoc) && i.getTenHocPhan().equals(tenHocPhan)){
+                hocphanmo = i;
+                break;
+            }
+        }
+        int flag = 0;
+        for (Hocphanmo i: danhSachDangKi) {
+            if(i.getThu().equals(hocphanmo.getThu()) && i.getCa().equals(hocphanmo.getCa())){
+                flag = 1;
+                break;
+            }
+            if(i.getMonhoc().getMaMonHoc().equals(hocphanmo.getMonhoc().getMaMonHoc())){
+                flag = 2;
+                break;
+            }
+        }
+        if(flag == 0) {
+            danhSachDangKi.add(hocphanmo);
+            capNhatBangDangKiHocPhan();
+        }
+        else if(flag == 1){
+            JOptionPane.showMessageDialog(null, "Không Được Đăng Kí 2 Môn Trùng Giờ !!");
+        }
+        else if(flag == 2){
+            JOptionPane.showMessageDialog(null, "Không Được Đăng Kí 2 Môn Trùng Nhau !!");
+        }
+    }
+
+    private void danhSachMonDangKiMouseClicked(java.awt.event.MouseEvent evt) {
+        int dong = danhSachMonDangKi.getSelectedRow();
+        int[] cot = danhSachMonDangKi.getSelectedColumns();
+        String maMonHoc = String.valueOf(danhSachMonDangKi.getValueAt(dong, 0));
+        String tenHocPhan=  String.valueOf(danhSachMonDangKi.getValueAt(dong, 1));
+        String tenPhongHoc = String.valueOf(danhSachMonDangKi.getValueAt(dong, 2));
+        String thu = String.valueOf(danhSachMonDangKi.getValueAt(dong, 3));
+        String strCa = String.valueOf(danhSachMonDangKi.getValueAt(dong, 4));
+        String strSoLuong =  String.valueOf(danhSachMonDangKi.getValueAt(dong, 5));
+
+        Sinhvien sinhvienDangKi = sinhvien;
+        Hocphanmo hocphanmo = null;
+        for (Hocphanmo i : danhSachMoLop) {
+            if(i.getMonhoc().getMaMonHoc().equals(maMonHoc) && i.getTenHocPhan().equals(tenHocPhan)){
+                hocphanmo = i;
+                break;
+            }
+        }
+        danhSachDangKi.remove(hocphanmo);
+        capNhatBangDangKiHocPhan();
+    }
+
+
+    void capNhatBangDanhSachHocPhan() {
+        long millis = System.currentTimeMillis();
+        Date ngayHienTai = new Date(millis);
+        Date ngayBatDau = thoigiandkhpHienTai.getNgayBatDau();
+        Date ngayKetThuc = thoigiandkhpHienTai.getNgayKetThuc();
+        GioHienTai = ngayHienTai;
+        if (ngayHienTai.after(ngayBatDau) && ngayHienTai.before(ngayKetThuc)) {
+//        if(true) {
+            DefaultTableModel defaultTableModel = new DefaultTableModel();
+            danhSachHocPhan.setModel(defaultTableModel);
+            defaultTableModel.addColumn("Mã Môn Học");
+            defaultTableModel.addColumn("Tên Học Phần");
+            defaultTableModel.addColumn("Tên Phòng Học");
+            defaultTableModel.addColumn("Thứ");
+            defaultTableModel.addColumn("Ca");
+            defaultTableModel.addColumn("Số Lượng");
+            Sinhvien sinhvienSuDung = giaoVuService.laySinhVienBangMaSinhVien(sinhvien.getMaSinhVien());
+            Set<Sinhvien_Hocphan> sinhvien_hocphans = sinhvienSuDung.getSinhvien_hocphans();
+
+            List<Monhoc> danhSachMonHocSinhVienDaDangKi = new ArrayList<Monhoc>(0);
+
+
+
+            for (Sinhvien_Hocphan i : sinhvien_hocphans) {
+                danhSachMonHocSinhVienDaDangKi.add(i.getHocphanmo().getMonhoc());
+
+            }
+            List<Hocphanmo> hocphanmoList = giaoVuService.layDanhSachHocPhanMoTrongHocKi(hockiHienTai.getTenHocKi(), hockiHienTai.getNamHoc());
+            for (Hocphanmo i : hocphanmoList) {
+                boolean flag = true;
+                for (Monhoc j : danhSachMonHocSinhVienDaDangKi) {
+                    if (i.getMonhoc().getMaMonHoc().equals(j.getMaMonHoc())) {
+                        flag = false;
+                    }
+                }
+                if (flag == true) {
+                    int soLuongHienTai = giaoVuService.laySoLuongSinhVienTrongHocPhan(i);
+                    Object[] tmp = new Object[]{i.getMonhoc().getMaMonHoc(), i.getTenHocPhan(), i.getTenPhongHoc(), i.getThu(), i.getCa().toString(), soLuongHienTai + "/" + i.getSoLuong()};
+                    defaultTableModel.addRow(tmp);
+
+                }
+            }
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "Hiện Nay Không Mở Kì Đăng Kí Học Phần !!");
+        }
+    }
+
+    void capNhatBangDangKiHocPhan(){
+        DefaultTableModel defaultTableModel = new DefaultTableModel();
+        danhSachMonDangKi.setModel(defaultTableModel);
+        defaultTableModel.addColumn("Mã Môn Học");
+        defaultTableModel.addColumn("Tên Học Phần");
+        defaultTableModel.addColumn("Tên Phòng Học");
+        defaultTableModel.addColumn("Thứ");
+        defaultTableModel.addColumn("Ca");
+        defaultTableModel.addColumn("Số Lượng");
+        for (Hocphanmo i: danhSachDangKi) {
+            int soLuongHienTai = giaoVuService.laySoLuongSinhVienTrongHocPhan(i);
+            Object[] tmp = new Object[]{i.getMonhoc().getMaMonHoc(), i.getTenHocPhan(), i.getTenPhongHoc(), i.getThu(), i.getCa().toString(), soLuongHienTai + "/" + i.getSoLuong()};
+            defaultTableModel.addRow(tmp);
+        }
+    }
+
+
+    /**
+     * @param args the command line arguments
+     */
 
 
     // Variables declaration - do not modify
     private javax.swing.JButton dangKi;
     private javax.swing.JTable danhSachHocPhan;
+    private javax.swing.JTable danhSachMonDangKi;
+    private javax.swing.JButton huyDangKi;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JButton lamMoi;
-    private javax.swing.JTextField layMaMonHocChon;
-    private javax.swing.JTextField layTenHocPhanChon;
-    private javax.swing.JLabel maMonHocChon;
-    private javax.swing.JLabel tenHocPhanChon;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JButton thoat;
     private javax.swing.JLabel tieuDeDangKiHocPhan;
+    private javax.swing.JLabel tieuDeDanhSachMonDangKi;
     // End of variables declaration
 }

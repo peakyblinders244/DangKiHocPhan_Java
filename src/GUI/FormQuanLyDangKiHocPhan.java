@@ -22,7 +22,8 @@ import static GUI.DangNhap.giaoVuService;
  * @author lhqua
  */
 public class FormQuanLyDangKiHocPhan extends javax.swing.JPanel {
-    private Thoigiandkhp thoigiandkhpChon = null;public static Thoigiandkhp thoigiandkhpSet = null;
+    private Thoigiandkhp thoigiandkhpChon = null;
+
     private Hocki hocki = null;
     /**
      * Creates new form FormQuanLyDangKiHocPhan
@@ -30,47 +31,7 @@ public class FormQuanLyDangKiHocPhan extends javax.swing.JPanel {
     public FormQuanLyDangKiHocPhan(Hocki hockiHienTai) {
         hocki = hockiHienTai;
         initComponents();
-        DefaultTableModel defaultTableModel = new DefaultTableModel();
-        danhSachDangKiHocPhan.setModel(defaultTableModel);
-        defaultTableModel.addColumn("Tên Học Kì Đăng Kí");
-        defaultTableModel.addColumn("Ngày Bắt Đầu");
-        defaultTableModel.addColumn("Ngày Kết Thúc");
-
-        if (hockiHienTai != null) {
-            Thoigiandkhp thoigiandkhp = giaoVuService.layThongtinThoiGianDKHPHienTai(hockiHienTai.getTenHocKi(), hockiHienTai.getNamHoc());
-            if (thoigiandkhp != null) {
-                themDangKiHocPhan.setEnabled(false);
-            }
-            try {
-                Object[] tmp = new Object[]{thoigiandkhp.getHocki().getTenHocKi(), thoigiandkhp.getNgayBatDau().toString(), thoigiandkhp.getNgayKetThuc().toString()};
-                defaultTableModel.addRow(tmp);
-            } catch (Exception e) {
-
-            }
-            ListSelectionModel listSelectionModel = danhSachDangKiHocPhan.getSelectionModel();
-            listSelectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-            listSelectionModel.addListSelectionListener(new ListSelectionListener() {
-                @Override
-                public void valueChanged(ListSelectionEvent e) {
-                    int[] dong = danhSachDangKiHocPhan.getSelectedRows();
-                    int[] cot = danhSachDangKiHocPhan.getSelectedColumns();
-                    String tenHocKi = String.valueOf(danhSachDangKiHocPhan.getValueAt(dong[0], 0));
-                    String ngayBatDau = String.valueOf(danhSachDangKiHocPhan.getValueAt(dong[0], 1));
-                    String ngayKetThuc = String.valueOf(danhSachDangKiHocPhan.getValueAt(dong[0], 2));
-
-
-                    thoigiandkhpChon = giaoVuService.layThongtinThoiGianDKHPHienTai(tenHocKi, hockiHienTai.getNamHoc());
-
-                    System.out.println(thoigiandkhpChon.toString());
-                    if (thoigiandkhpChon != null) {
-                        layTenDangKiHocPhan.setText(thoigiandkhpChon.getHocki().getTenHocKi());
-                        layNamHoc.setText(thoigiandkhpChon.getHocki().getNamHoc().toString());
-                        layNgayBatDau.setText(thoigiandkhpChon.getNgayBatDau().toString());
-                        layNgayKetThuc.setText(thoigiandkhpChon.getNgayKetThuc().toString());
-                    }
-                }
-            });
-        }
+        capNhatDanhSachDangKiHocPhan();
     }
 
     /**
@@ -149,6 +110,11 @@ public class FormQuanLyDangKiHocPhan extends javax.swing.JPanel {
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
+            }
+        });
+        danhSachDangKiHocPhan.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                danhSachDangKiHocPhanMouseClicked(evt);
             }
         });
         jScrollPane1.setViewportView(danhSachDangKiHocPhan);
@@ -372,6 +338,7 @@ public class FormQuanLyDangKiHocPhan extends javax.swing.JPanel {
         }
         if(giaoVuService.themThoiGianDKHP(thoigiandkhpMoi)){
             JOptionPane.showMessageDialog(this, "Thêm Thành Công ", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            capNhatDanhSachDangKiHocPhan();
         }
         else{
             JOptionPane.showMessageDialog(null, "Lỗi Không Thêm Được!! Dữ Liệu Có Thể Đã Tồn Tại!!");
@@ -409,6 +376,7 @@ public class FormQuanLyDangKiHocPhan extends javax.swing.JPanel {
 
         if(giaoVuService.capNhatThoiGianDKHP(thoigiandkhpChon)){
             JOptionPane.showMessageDialog(this, "Cập Nhật Thành Công ", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            capNhatDanhSachDangKiHocPhan();
         }
         else{
             JOptionPane.showMessageDialog(null, "Lỗi Không Cập Nhật Được!! Mời Kiểm Tra Lại!!");
@@ -417,8 +385,50 @@ public class FormQuanLyDangKiHocPhan extends javax.swing.JPanel {
     }
 
     private void lamMoiDanhSachActionPerformed(java.awt.event.ActionEvent evt) {
+        capNhatDanhSachDangKiHocPhan();
         ResetForm();
     }
+
+    private void danhSachDangKiHocPhanMouseClicked(java.awt.event.MouseEvent evt) {
+        int dong = danhSachDangKiHocPhan.getSelectedRow();
+        int[] cot = danhSachDangKiHocPhan.getSelectedColumns();
+        String tenHocKi = String.valueOf(danhSachDangKiHocPhan.getValueAt(dong, 0));
+        String ngayBatDau = String.valueOf(danhSachDangKiHocPhan.getValueAt(dong, 1));
+        String ngayKetThuc = String.valueOf(danhSachDangKiHocPhan.getValueAt(dong, 2));
+
+
+        thoigiandkhpChon = giaoVuService.layThongtinThoiGianDKHPHienTai(tenHocKi, hocki.getNamHoc());
+
+        System.out.println(thoigiandkhpChon.toString());
+        if (thoigiandkhpChon != null) {
+            layTenDangKiHocPhan.setText(thoigiandkhpChon.getHocki().getTenHocKi());
+            layNamHoc.setText(thoigiandkhpChon.getHocki().getNamHoc().toString());
+            layNgayBatDau.setText(thoigiandkhpChon.getNgayBatDau().toString());
+            layNgayKetThuc.setText(thoigiandkhpChon.getNgayKetThuc().toString());
+        }
+    }
+
+
+    private void capNhatDanhSachDangKiHocPhan() {
+        DefaultTableModel defaultTableModel = new DefaultTableModel();
+        danhSachDangKiHocPhan.setModel(defaultTableModel);
+        defaultTableModel.addColumn("Tên Học Kì Đăng Kí");
+        defaultTableModel.addColumn("Ngày Bắt Đầu");
+        defaultTableModel.addColumn("Ngày Kết Thúc");
+        if (hocki != null) {
+            Thoigiandkhp thoigiandkhp = giaoVuService.layThongtinThoiGianDKHPHienTai(hocki.getTenHocKi(), hocki.getNamHoc());
+            if (thoigiandkhp != null) {
+                themDangKiHocPhan.setEnabled(false);
+            }
+            try {
+                Object[] tmp = new Object[]{thoigiandkhp.getHocki().getTenHocKi(), thoigiandkhp.getNgayBatDau().toString(), thoigiandkhp.getNgayKetThuc().toString()};
+                defaultTableModel.addRow(tmp);
+            } catch (Exception e) {
+
+            }
+        }
+    }
+
     public void ResetForm() {
         layTenDangKiHocPhan.setText(hocki.getTenHocKi());
         layNamHoc.setText(hocki.getNamHoc().toString());
@@ -426,8 +436,6 @@ public class FormQuanLyDangKiHocPhan extends javax.swing.JPanel {
         layNgayKetThuc.setText("");
         thoigiandkhpChon = null;
     }
-
-
     // Variables declaration - do not modify
     private javax.swing.JTable danhSachDangKiHocPhan;
     private javax.swing.JLabel jLabel1;

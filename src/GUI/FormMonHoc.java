@@ -29,41 +29,7 @@ public class FormMonHoc extends javax.swing.JPanel {
      */
     public FormMonHoc() {
         initComponents();
-        DefaultTableModel defaultTableModel = new DefaultTableModel();
-        danhSachMonHoc.setModel(defaultTableModel);
-        defaultTableModel.addColumn("Mã Môn Học");
-        defaultTableModel.addColumn("Tên Môn Học");
-        defaultTableModel.addColumn("Số Tín Chỉ");
-        if(kiemTraNguoiDung == 0) {
-            List<Monhoc> listMonHoc = giaoVuService.layDanhSachMonHoc();
-            for (Monhoc i : listMonHoc) {
-                Object[] tmp = new Object[]{i.getMaMonHoc(),i.getTenMonHoc(),i.getSoTinChi()};
-                defaultTableModel.addRow(tmp);
-            }
-            ListSelectionModel listSelectionModel = danhSachMonHoc.getSelectionModel();
-            listSelectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-            listSelectionModel.addListSelectionListener(new ListSelectionListener() {
-                @Override
-                public void valueChanged(ListSelectionEvent e) {
-                    int[] dong = danhSachMonHoc.getSelectedRows();
-                    int[] cot = danhSachMonHoc.getSelectedColumns();
-                    String maMonHoc = String.valueOf(danhSachMonHoc.getValueAt(dong[0], 0));
-                    String tenMonHoc = String.valueOf(danhSachMonHoc.getValueAt(dong[0], 1));
-                    int soTinChi = (int)(danhSachMonHoc.getValueAt(dong[0], 2));
-
-
-                    monhocChon = giaoVuService.layThongTinMonHocBangMaMonHoc(maMonHoc);
-
-                    System.out.println(monhocChon.toString());
-                    if (monhocChon != null) {
-                        layMaMonHoc.setText(monhocChon.getMaMonHoc());
-                        layTenMonHoc.setText(monhocChon.getTenMonHoc());
-                        laySoTinChi.setText(monhocChon.getSoTinChi().toString());
-
-                    }
-                }
-            });
-        }
+        capNhatDanhSachMonHoc();
     }
 
     /**
@@ -77,7 +43,6 @@ public class FormMonHoc extends javax.swing.JPanel {
 
         jPanel1 = new javax.swing.JPanel();
         tieuDeQuanLyMonHoc = new javax.swing.JLabel();
-        jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         maMonHoc = new javax.swing.JLabel();
         layMaMonHoc = new javax.swing.JTextField();
@@ -113,17 +78,6 @@ public class FormMonHoc extends javax.swing.JPanel {
                                 .addContainerGap()
                                 .addComponent(tieuDeQuanLyMonHoc, javax.swing.GroupLayout.DEFAULT_SIZE, 24, Short.MAX_VALUE)
                                 .addContainerGap())
-        );
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-                jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGap(0, 818, Short.MAX_VALUE)
-        );
-        jPanel2Layout.setVerticalGroup(
-                jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGap(0, 202, Short.MAX_VALUE)
         );
 
         maMonHoc.setText("Mã Môn Học");
@@ -247,6 +201,11 @@ public class FormMonHoc extends javax.swing.JPanel {
                 return types [columnIndex];
             }
         });
+        danhSachMonHoc.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                danhSachMonHocMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(danhSachMonHoc);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -256,17 +215,10 @@ public class FormMonHoc extends javax.swing.JPanel {
                         .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createSequentialGroup()
                                 .addContainerGap()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jScrollPane1)
-                                        .addGroup(layout.createSequentialGroup()
-                                                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(layout.createSequentialGroup()
-                                        .addContainerGap()
-                                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
         );
         layout.setVerticalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -278,11 +230,6 @@ public class FormMonHoc extends javax.swing.JPanel {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(layout.createSequentialGroup()
-                                        .addGap(45, 45, 45)
-                                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addContainerGap(155, Short.MAX_VALUE)))
         );
     }// </editor-fold>
 
@@ -306,6 +253,7 @@ public class FormMonHoc extends javax.swing.JPanel {
             Monhoc monhonMoi = new Monhoc(maMonHoc, tenMonHoc, sotinChi);
             if (giaoVuService.themMonHocMoi(monhonMoi)) {
                 JOptionPane.showMessageDialog(this, "Thêm Thành Công ", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                capNhatDanhSachMonHoc();
             } else {
                 JOptionPane.showMessageDialog(null, "Lỗi Không Thêm Được Mời Kiểm Tra Lại Dữ Liệu !");
                 this.ResetForm();
@@ -315,8 +263,6 @@ public class FormMonHoc extends javax.swing.JPanel {
 
     private void suaMonHocActionPerformed(java.awt.event.ActionEvent evt) {
         if(monhocChon != null) {
-
-
             String strNull = "";
             String maMonHoc = layMaMonHoc.getText();
             String tenMonHoc1 = layTenMonHoc.getText();
@@ -346,6 +292,7 @@ public class FormMonHoc extends javax.swing.JPanel {
 
                 if (giaoVuService.capNhatMonHoc(monhocChon)) {
                     JOptionPane.showMessageDialog(this, "Sửa Thành Công ", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                    capNhatDanhSachMonHoc();
                 } else {
                     JOptionPane.showMessageDialog(null, "Lỗi Không Sửa Được Mời Kiểm Tra Lại Dữ Liệu !");
                     this.ResetForm();
@@ -353,7 +300,7 @@ public class FormMonHoc extends javax.swing.JPanel {
             }
         }
         else{
-            JOptionPane.showMessageDialog(null, "Chưa Chọn Giáo Vụ !");
+            JOptionPane.showMessageDialog(null, "Chưa Chọn Môn Học !!");
             this.ResetForm();
         }
     }
@@ -382,6 +329,7 @@ public class FormMonHoc extends javax.swing.JPanel {
             }else {
                 if (giaoVuService.xoaMonHoc(monhocChon)) {
                     JOptionPane.showMessageDialog(this, "Xóa  Thành Công ", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                    capNhatDanhSachMonHoc();
                 } else {
                     JOptionPane.showMessageDialog(null, "Xóa Không Thành Công!! Mời Kiểm Tra Lại Dữ Liệu");
                     this.ResetForm();
@@ -391,7 +339,40 @@ public class FormMonHoc extends javax.swing.JPanel {
     }
 
     private void lamMoiDanhSachActionPerformed(java.awt.event.ActionEvent evt) {
+        capNhatDanhSachMonHoc();
         ResetForm();
+    }
+
+    private void danhSachMonHocMouseClicked(java.awt.event.MouseEvent evt) {
+        int dong = danhSachMonHoc.getSelectedRow();
+        int[] cot = danhSachMonHoc.getSelectedColumns();
+        String maMonHoc = String.valueOf(danhSachMonHoc.getValueAt(dong, 0));
+        String tenMonHoc = String.valueOf(danhSachMonHoc.getValueAt(dong, 1));
+        int soTinChi = (int)(danhSachMonHoc.getValueAt(dong, 2));
+
+        monhocChon = giaoVuService.layThongTinMonHocBangMaMonHoc(maMonHoc);
+
+        System.out.println(monhocChon.toString());
+        if (monhocChon != null) {
+            layMaMonHoc.setText(monhocChon.getMaMonHoc());
+            layTenMonHoc.setText(monhocChon.getTenMonHoc());
+            laySoTinChi.setText(monhocChon.getSoTinChi().toString());
+
+        }
+
+    }
+
+    private void capNhatDanhSachMonHoc(){
+        DefaultTableModel defaultTableModel = new DefaultTableModel();
+        danhSachMonHoc.setModel(defaultTableModel);
+        defaultTableModel.addColumn("Mã Môn Học");
+        defaultTableModel.addColumn("Tên Môn Học");
+        defaultTableModel.addColumn("Số Tín Chỉ");
+        List<Monhoc> listMonHoc = giaoVuService.layDanhSachMonHoc();
+        for (Monhoc i : listMonHoc) {
+            Object[] tmp = new Object[]{i.getMaMonHoc(),i.getTenMonHoc(),i.getSoTinChi()};
+            defaultTableModel.addRow(tmp);
+        }
     }
 
     public void ResetForm() {
@@ -404,7 +385,6 @@ public class FormMonHoc extends javax.swing.JPanel {
     // Variables declaration - do not modify
     private javax.swing.JTable danhSachMonHoc;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;

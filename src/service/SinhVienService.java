@@ -26,6 +26,10 @@ public class SinhVienService {
         return dao.themSinhVienVaoHocPhan(sinhvien_hocphan);
     }
 
+    public boolean xoaSinhVienTrongHocPhan(Sinhvien_Hocphan sinhvien_hocphan){
+        return dao.xoaSinhVienTrongHocPhan(sinhvien_hocphan);
+    }
+
 //    public boolean sinhVienThemHocPhan(Sinhvien sinhvien, Hocphanmo hocphanmo){
 //        return dao.sinhVienThemHocPhan(sinhvien,hocphanmo);
 //    }

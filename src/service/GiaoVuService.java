@@ -162,5 +162,17 @@ public class GiaoVuService {
     public int laySoLuongSinhVienTrongHocPhan(Hocphanmo hocphanmo){
         return dao.laySoLuongSinhVienTrongHocPhan(hocphanmo);
     }
+
+    public List<Giaovien> layDanhSachGiaoVien(){
+        return dao.layDanhSachGiaoVien();
+    }
+
+    public boolean themGiaoVien(Giaovien giaovien){
+        return dao.themGiaoVien(giaovien);
+    }
+
+    public boolean xoaGiaoVien(Giaovien giaovien){
+        return dao.xoaGiaoVien(giaovien);
+    }
 }
 

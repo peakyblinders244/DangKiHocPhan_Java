@@ -24,54 +24,13 @@ import static GUI.DangNhap.kiemTraNguoiDung;
  */
 public class FormQuanLyGiaoVu extends javax.swing.JPanel {
     private Giaovu giaovuChon = null;
+
     /**
      * Creates new form FormQuanLyGiaoVu
      */
     public FormQuanLyGiaoVu() {
         initComponents();
-        DefaultTableModel defaultTableModel = new DefaultTableModel();
-        danhSachGiaoVu.setModel(defaultTableModel);
-        defaultTableModel.addColumn("Mã Giáo Vụ");
-        defaultTableModel.addColumn("Tên");
-        defaultTableModel.addColumn("Giới Tính");
-        defaultTableModel.addColumn("Ngày Sinh");
-        defaultTableModel.addColumn("Địa Chỉ");
-        if(kiemTraNguoiDung == 0) {
-            List<Giaovu> listGiaoVu = giaoVuService.layDanhSachGiaoVu();
-            for (Giaovu i : listGiaoVu) {
-                Object[] tmp = new Object[]{i.getMaGiaoVu(), i.getTenGiaoVu(), i.getGioiTinh(), i.getNgaySinh().toString(), i.getDiaChi()};
-                defaultTableModel.addRow(tmp);
-            }
-            ListSelectionModel listSelectionModel = danhSachGiaoVu.getSelectionModel();
-            listSelectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-            listSelectionModel.addListSelectionListener(new ListSelectionListener() {
-                @Override
-                public void valueChanged(ListSelectionEvent e) {
-                    int[] dong = danhSachGiaoVu.getSelectedRows();
-                    int[] cot = danhSachGiaoVu.getSelectedColumns();
-                    String maGiaoVu = String.valueOf(danhSachGiaoVu.getValueAt(dong[0], 0));
-                    String tenGiaoVu = String.valueOf(danhSachGiaoVu.getValueAt(dong[0], 1));
-                    String gioiTinh = String.valueOf(danhSachGiaoVu.getValueAt(dong[0], 2));
-                    String ngaySinh = String.valueOf(danhSachGiaoVu.getValueAt(dong[0], 3));
-                    String diaChi = String.valueOf(danhSachGiaoVu.getValueAt(dong[0], 4));
-                    Date date = Date.valueOf(ngaySinh);
-                    giaovuChon = giaoVuService.layThongtinGiaoVuBangTaiKhoan(maGiaoVu);
-
-                    System.out.println(giaovuChon.toString());
-                    if (giaovuChon != null) {
-                        layMaGiaoVu.setText(giaovuChon.getMaGiaoVu());
-                        layTenGiaoVu.setText(giaovuChon.getTenGiaoVu());
-                        layNgaySinh.setText(giaovuChon.getNgaySinh().toString());
-                        layDiaChi.setText(giaovuChon.getDiaChi());
-                        if (giaovuChon.getGioiTinh().equals("Nam")) {
-                            layGioiTinh.setSelectedIndex(0);
-                        } else {
-                            layGioiTinh.setSelectedIndex(1);
-                        }
-                    }
-                }
-            });
-        }
+        capNhatDanhSachGiaoVu();
     }
 
     /**
@@ -152,6 +111,11 @@ public class FormQuanLyGiaoVu extends javax.swing.JPanel {
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
+            }
+        });
+        danhSachGiaoVu.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                danhSachGiaoVuMouseClicked(evt);
             }
         });
         jScrollPane1.setViewportView(danhSachGiaoVu);
@@ -347,6 +311,7 @@ public class FormQuanLyGiaoVu extends javax.swing.JPanel {
         Giaovu giaovuMoi = new Giaovu(maGiaoVu,tenGiaoVu,gioiTinh,date,diaChi,maGiaoVu,maGiaoVu);
         if(giaoVuService.themGiaoVu(giaovuMoi)){
             JOptionPane.showMessageDialog(this, "Thêm Thành Công ", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            capNhatDanhSachGiaoVu();
         }
         else{
             JOptionPane.showMessageDialog(null, "Lỗi Không Thêm Được Mời Kiểm Tra Lại Dữ Liệu !");
@@ -356,8 +321,6 @@ public class FormQuanLyGiaoVu extends javax.swing.JPanel {
 
     private void suaGiaoVuActionPerformed(java.awt.event.ActionEvent evt) {
         if(giaovuChon != null) {
-
-
             String strNull = "";
             String maGiaoVu = layMaGiaoVu.getText();
             String tenGiaoVu = layTenGiaoVu.getText();
@@ -386,13 +349,14 @@ public class FormQuanLyGiaoVu extends javax.swing.JPanel {
             giaovuChon.setDiaChi(diaChi);
             if (giaoVuService.capNhatGiaoVu(giaovuChon)) {
                 JOptionPane.showMessageDialog(this, "Sửa Thành Công ", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                capNhatDanhSachGiaoVu();
             } else {
                 JOptionPane.showMessageDialog(null, "Lỗi Không Sửa Được Mời Kiểm Tra Lại Dữ Liệu !");
                 this.ResetForm();
             }
         }
         else{
-            JOptionPane.showMessageDialog(null, "Chưa Chọn Giáo Vụ !");
+            JOptionPane.showMessageDialog(null, "Bạn Chưa Chọn Giáo Vụ !");
             this.ResetForm();
         }
     }
@@ -421,6 +385,7 @@ public class FormQuanLyGiaoVu extends javax.swing.JPanel {
             Giaovu giaovuXoa = giaoVuService.layThongtinGiaoVuBangTaiKhoan(maGiaoVu);
             if(giaoVuService.xoaTaiKhoanGiaoVu(maGiaoVu)){
                 JOptionPane.showMessageDialog(this, "Xóa  Thành Công ", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                capNhatDanhSachGiaoVu();
             }
             else{
                 JOptionPane.showMessageDialog(null, "Xóa Không Thành Công!! Mời Kiểm Tra Lại Dữ Liệu");
@@ -430,6 +395,7 @@ public class FormQuanLyGiaoVu extends javax.swing.JPanel {
     }
 
     private void lamMoiDanhSachActionPerformed(java.awt.event.ActionEvent evt) {
+        capNhatDanhSachGiaoVu();
         this.ResetForm();
     }
 
@@ -452,6 +418,45 @@ public class FormQuanLyGiaoVu extends javax.swing.JPanel {
         }
     }
 
+    private void danhSachGiaoVuMouseClicked(java.awt.event.MouseEvent evt) {
+        int dong = danhSachGiaoVu.getSelectedRow();
+        int[] cot = danhSachGiaoVu.getSelectedColumns();
+        String maGiaoVu = String.valueOf(danhSachGiaoVu.getValueAt(dong, 0));
+        String tenGiaoVu = String.valueOf(danhSachGiaoVu.getValueAt(dong, 1));
+        String gioiTinh = String.valueOf(danhSachGiaoVu.getValueAt(dong, 2));
+        String ngaySinh = String.valueOf(danhSachGiaoVu.getValueAt(dong, 3));
+        String diaChi = String.valueOf(danhSachGiaoVu.getValueAt(dong, 4));
+        Date date = Date.valueOf(ngaySinh);
+        giaovuChon = giaoVuService.layThongtinGiaoVuBangTaiKhoan(maGiaoVu);
+
+        if (giaovuChon != null) {
+            layMaGiaoVu.setText(giaovuChon.getMaGiaoVu());
+            layTenGiaoVu.setText(giaovuChon.getTenGiaoVu());
+            layNgaySinh.setText(giaovuChon.getNgaySinh().toString());
+            layDiaChi.setText(giaovuChon.getDiaChi());
+            if (giaovuChon.getGioiTinh().equals("Nam")) {
+                layGioiTinh.setSelectedIndex(0);
+            } else {
+                layGioiTinh.setSelectedIndex(1);
+            }
+        }
+    }
+
+    private void capNhatDanhSachGiaoVu(){
+        DefaultTableModel defaultTableModel = new DefaultTableModel();
+        danhSachGiaoVu.setModel(defaultTableModel);
+        defaultTableModel.addColumn("Mã Giáo Vụ");
+        defaultTableModel.addColumn("Tên");
+        defaultTableModel.addColumn("Giới Tính");
+        defaultTableModel.addColumn("Ngày Sinh");
+        defaultTableModel.addColumn("Địa Chỉ");
+        List<Giaovu> listGiaoVu = giaoVuService.layDanhSachGiaoVu();
+        for (Giaovu i : listGiaoVu) {
+            Object[] tmp = new Object[]{i.getMaGiaoVu(), i.getTenGiaoVu(), i.getGioiTinh(), i.getNgaySinh().toString(), i.getDiaChi()};
+            defaultTableModel.addRow(tmp);
+        }
+    }
+
     public void ResetForm() {
         layMaGiaoVu.setText("");
         layTenGiaoVu.setText("");
@@ -460,7 +465,6 @@ public class FormQuanLyGiaoVu extends javax.swing.JPanel {
         layGioiTinh.setSelectedIndex(0);
         giaovuChon = null;
     }
-
     // Variables declaration - do not modify
     private javax.swing.JTable danhSachGiaoVu;
     private javax.swing.JLabel diaChi;
