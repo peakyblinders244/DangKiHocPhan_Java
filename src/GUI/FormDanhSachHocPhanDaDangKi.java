@@ -223,6 +223,7 @@ public class FormDanhSachHocPhanDaDangKi extends javax.swing.JFrame {
         for (Hocphanmo i : danhSachDaDangKi) {
             if(i.getMonhoc().getMaMonHoc().equals(maMonHoc) && i.getTenHocPhan().equals(tenHocPhan)){
                 hocphanmo = i;
+                System.out.println(i.toString());
                 break;
             }
         }

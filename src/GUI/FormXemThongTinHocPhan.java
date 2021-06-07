@@ -260,7 +260,12 @@ public class FormXemThongTinHocPhan extends javax.swing.JFrame {
     }
 
     private void lamMoiActionPerformed(java.awt.event.ActionEvent evt) {
-        new FormXemThongTinHocPhan(hocphanmo).setVisible(true);
+        JFrame frame = new FormXemThongTinHocPhan(hocphanmo);
+        frame.setResizable(false);
+        frame.setTitle("Xem Thông Tin Học Phần");
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
         dispose();
     }
 

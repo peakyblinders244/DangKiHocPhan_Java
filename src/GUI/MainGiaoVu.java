@@ -236,7 +236,7 @@ public class MainGiaoVu extends javax.swing.JFrame {
         quanLyMonHoc.show();
         content.removeAll();
         content.add("Quản Lý Học Kì", quanLyHocKi);
-        //quanLyGiaoVu.ResetForm();
+
     }
 
     private void thoatActionPerformed(java.awt.event.ActionEvent evt) {
@@ -246,8 +246,7 @@ public class MainGiaoVu extends javax.swing.JFrame {
 
     private void dangXuatActionPerformed(java.awt.event.ActionEvent evt) {
         dispose();
-//        DangNhap dangNhap = new DangNhap();
-//        dangNhap.setVisible(true);
+
         JFrame frame = new DangNhap();
         frame.setTitle("Đăng Nhập");
         frame.setResizable(false);
@@ -259,8 +258,7 @@ public class MainGiaoVu extends javax.swing.JFrame {
     }
 
     private void quanLyMatKhauActionPerformed(java.awt.event.ActionEvent evt) {
-//        DoiMatKhau doiMatKhau = new DoiMatKhau();
-//        doiMatKhau.show();
+
         JFrame frame = new DoiMatKhau();
         frame.setResizable(false);
         frame.setTitle("Đổi Mật Khẩu");
@@ -270,8 +268,7 @@ public class MainGiaoVu extends javax.swing.JFrame {
     }
 
     private void thayDoiThongTinActionPerformed(java.awt.event.ActionEvent evt) {
-//        ThayDoiThongTin thayDoiThongTin = new ThayDoiThongTin();
-//        thayDoiThongTin.show();
+
         JFrame frame = new ThayDoiThongTin();
         frame.setResizable(false);
         frame.setTitle("Thay Đổi Thông Tin");
@@ -285,7 +282,7 @@ public class MainGiaoVu extends javax.swing.JFrame {
         quanLyGiaoVu.show();
         content.removeAll();
         content.add("Quản Lý Giáo Vụ", quanLyGiaoVu);
-        //quanLyGiaoVu.ResetForm();
+
     }
 
     private void quanLyLopHocActionPerformed(java.awt.event.ActionEvent evt) {
@@ -293,7 +290,7 @@ public class MainGiaoVu extends javax.swing.JFrame {
         quanLyLopHoc.show();
         content.removeAll();
         content.add("Quản Lý Lớp Học", quanLyLopHoc);
-        //quanLyLopHoc.ResetForm();
+
     }
 
     private void quanLyMonHocActionPerformed(java.awt.event.ActionEvent evt) {
@@ -325,7 +322,7 @@ public class MainGiaoVu extends javax.swing.JFrame {
             quanLyDangKiHocPhan.show();
             content.removeAll();
             content.add("Quản Lý Đăng Kí Học Phần", quanLyDangKiHocPhan);
-            //quanLyGiaoVu.ResetForm();
+
         }
         else{
             JOptionPane.showMessageDialog(null, "Chưa Set Học Kì Hiện Tại");
@@ -337,7 +334,7 @@ public class MainGiaoVu extends javax.swing.JFrame {
         quanLyHocPhan.show();
         content.removeAll();
         content.add("Quản Lý Học Phần", quanLyHocPhan);
-        //quanLyGiaoVu.ResetForm();
+
     }
 
     private void timKiemGiaoVuActionPerformed(java.awt.event.ActionEvent evt) {
@@ -345,7 +342,7 @@ public class MainGiaoVu extends javax.swing.JFrame {
         formDanhSachGiaoVu.show();
         content.removeAll();
         content.add("Danh Sách Giáo Vụ", formDanhSachGiaoVu);
-        //thongTinTaiKhoan.ResetForm
+
     }
 
     private void xemThongTinTaiKhoanActionPerformed(java.awt.event.ActionEvent evt) {
@@ -353,12 +350,11 @@ public class MainGiaoVu extends javax.swing.JFrame {
         thongTinTaiKhoan.show();
         content.removeAll();
         content.add("Thông Tin Tài Khoản", thongTinTaiKhoan);
-        //thongTinTaiKhoan.ResetForm
+
     }
 
     private void quanLyGiaoVienActionPerformed(java.awt.event.ActionEvent evt) {
-//        FormQuanLyGiaoVien formQuanLyGiaoVien = new FormQuanLyGiaoVien();
-//        formQuanLyGiaoVien.show();
+
         JFrame frame = new FormQuanLyGiaoVien();
         frame.setResizable(false);
         frame.setTitle("Quản Lý Giáo Viên");

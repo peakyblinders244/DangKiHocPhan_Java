@@ -30,13 +30,6 @@ public class SinhVienService {
         return dao.xoaSinhVienTrongHocPhan(sinhvien_hocphan);
     }
 
-//    public boolean sinhVienThemHocPhan(Sinhvien sinhvien, Hocphanmo hocphanmo){
-//        return dao.sinhVienThemHocPhan(sinhvien,hocphanmo);
-//    }
-//
-//    public boolean sinhVienXoaHocPhan(Sinhvien sinhvien, Hocphanmo hocphanmo){
-//        return dao.sinhVienXoaHocPhan(sinhvien,hocphanmo);
-//    }
 
 
 }

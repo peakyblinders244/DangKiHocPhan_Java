@@ -111,7 +111,7 @@ public class DangNhap extends javax.swing.JFrame {
         else {
             giaovu = giaoVuService.giaoVuDangNhap(stTaiKhoan,stMatKhau);
             if(giaovu != null){
-                //code
+
                 kiemTraNguoiDung = 0;
                 JFrame frame = new MainGiaoVu();
                 frame.setResizable(false);
@@ -119,16 +119,15 @@ public class DangNhap extends javax.swing.JFrame {
                 frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 frame.setLocationRelativeTo(null);
                 frame.setVisible(true);
-                //new MainGiaoVu().setVisible(true);
                 dispose();
 
             }
             else {
                 sinhvien = sinhVienService.sinhVienDangNhap(stTaiKhoan,stMatKhau);
                 if(sinhvien != null){
-                    //code
+
                     kiemTraNguoiDung = 1;
-                    //new MainSinhVien().setVisible(true);
+
                     JFrame frame = new MainSinhVien();
                     frame.setResizable(false);
                     frame.setTitle("Sinh Viên");

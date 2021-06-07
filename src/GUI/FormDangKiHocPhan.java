@@ -361,7 +361,7 @@ public class FormDangKiHocPhan extends javax.swing.JFrame{
         Date ngayKetThuc = thoigiandkhpHienTai.getNgayKetThuc();
         GioHienTai = ngayHienTai;
         if (ngayHienTai.after(ngayBatDau) && ngayHienTai.before(ngayKetThuc)) {
-//        if(true) {
+
             DefaultTableModel defaultTableModel = new DefaultTableModel();
             danhSachHocPhan.setModel(defaultTableModel);
             defaultTableModel.addColumn("Mã Môn Học");

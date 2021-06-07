@@ -50,11 +50,7 @@ public class Sinhvien_HocphanDAO {
         if(timKiemSinhVienHocPhanBangId(sinhvien_hocphan.getId()) != null){
             return false;
         }
-//        Hocphanmo hocphanmo = sinhvien_hocphan.getHocphanmo();
-//        Set<Sinhvien_Hocphan> sinhvien_hocphans = hocphanmo.getSinhvien_hocphans();
-//        if(hocphanmo.getSoLuong().intValue() >sinhvien_hocphans.size()){
-//            return false;
-//        }
+
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction transaction = null;
         try {
