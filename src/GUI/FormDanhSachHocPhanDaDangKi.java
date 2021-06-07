@@ -200,7 +200,10 @@ public class FormDanhSachHocPhanDaDangKi extends javax.swing.JFrame {
         else{
             if(sinhVienService.xoaSinhVienTrongHocPhan(sinhvien_hocphanDangKi)){
                 JOptionPane.showMessageDialog(null, "Hủy Thành Công !!");
-                danhSachDaDangKi.remove(sinhvien_hocphanDangKi.getHocphanmo());
+                if(!danhSachDaDangKi.remove(sinhvien_hocphanDangKi.getHocphanmo())){
+                    JOptionPane.showMessageDialog(null, "Hủy Không Thành Công !! Mời Thử Lại");
+                }
+
                 capNhatDanhSachDaDangKi();
             }
             else{
@@ -218,18 +221,18 @@ public class FormDanhSachHocPhanDaDangKi extends javax.swing.JFrame {
         String thu = String.valueOf(danhSachHocPhanDangKi.getValueAt(dong, 3));
         String strCa = String.valueOf(danhSachHocPhanDangKi.getValueAt(dong, 4));
 
-        Sinhvien sinhvienDangKi = sinhvien;
+        Sinhvien sinhvienDangKi = giaoVuService.laySinhVienBangMaSinhVien(sinhvien.getMaSinhVien());
         Hocphanmo hocphanmo = null;
         for (Hocphanmo i : danhSachDaDangKi) {
             if(i.getMonhoc().getMaMonHoc().equals(maMonHoc) && i.getTenHocPhan().equals(tenHocPhan)){
                 hocphanmo = i;
-                System.out.println(i.toString());
                 break;
             }
         }
         Set<Sinhvien_Hocphan> danhSachHocPhanDangKi = sinhvienDangKi.getSinhvien_hocphans();
         for (Sinhvien_Hocphan i: danhSachHocPhanDangKi) {
-            if(i.getHocphanmo().equals(hocphanmo)){
+            if(i.getHocphanmo().getMonhoc().getMaMonHoc().equals(hocphanmo.getMonhoc().getMaMonHoc()
+            )){
                 sinhvien_hocphanDangKi = i;
                 break;
             }

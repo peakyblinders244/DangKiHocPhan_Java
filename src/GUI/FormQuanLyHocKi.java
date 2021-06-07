@@ -344,7 +344,7 @@ public class FormQuanLyHocKi extends javax.swing.JPanel {
                 return;
             }
             if (ngayBatDau.charAt(4) != '-' || ngayKetThuc.charAt(7) != '-') {
-                JOptionPane.showMessageDialog(null, "Ngày sinh nhập sai !!");
+                JOptionPane.showMessageDialog(null, "Ngày nhập sai !! Mời Nhập Lại!!");
                 this.ResetForm();
                 return;
             }
